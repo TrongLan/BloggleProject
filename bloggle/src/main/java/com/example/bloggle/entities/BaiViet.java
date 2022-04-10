@@ -1,13 +1,14 @@
 package com.example.bloggle.entities;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "BAIVIET")
-public class BaiViet {
+public class BaiViet implements Comparable<BaiViet>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -79,16 +80,16 @@ public class BaiViet {
         this.tomtat = tomtat;
     }
 
-    public LocalDateTime getTgdang() {
-        return tgdang;
+    public String getTgdang() {
+        return tgdang.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
     public void setTgdang(LocalDateTime tgdang) {
         this.tgdang = tgdang;
     }
 
-    public LocalDateTime getTgsua() {
-        return tgsua;
+    public String getTgsua() {
+        return tgsua.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
     public void setTgsua(LocalDateTime tgsua) {
@@ -135,4 +136,18 @@ public class BaiViet {
         this.ds_report = ds_report;
     }
     
+//    public String tgFormat(LocalDateTime tg){
+//        return tg.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+//    }
+
+    @Override
+    public int compareTo(BaiViet o) {
+        if(this.getDs_report().size()==o.getDs_report().size())
+            return 0;
+        else
+            if(this.getDs_report().size()>o.getDs_report().size())
+                return -1;
+            else
+                return 1;
+    }
 }

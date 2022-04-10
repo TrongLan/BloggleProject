@@ -11,9 +11,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
         
-        <form th:action="@{/logout}" method="POST">
-            <input type="submit" value="Logout">
-        </form>
+        <div>
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout">
+            </form>
+            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+        </div>
+
+        <div><a th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a></div>
+        <div>
+            Quản lý bài viết
+            <a th:href="@{/admin/quanLyBV?m=month_accounting}">Xem thống kê tháng</a>
+            <a th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
+        </div>
+        <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
         <form th:action="@{/admin/quanLyTK}" method="get">
             <input name="keyword" type="search" placeholder="Nhập email hoặc tên tài khoản...">
             <button type="submit">Search</button>

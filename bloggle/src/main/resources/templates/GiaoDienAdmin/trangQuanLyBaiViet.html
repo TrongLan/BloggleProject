@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Quản lý bài viết</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout">
+            </form>
+            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+        </div>
+
+        <div><a th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a></div>
+        <div>
+            Quản lý bài viết
+            <a th:href="@{/admin/quanLyBV?m=month_accounting}">Xem thống kê tháng</a>
+            <a th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
+        </div>
+        <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
+        <hr>
+<!--        <form th:action="@{/admin/quanLyBV}" method="get">
+            <label for="idcd">Lọc theo chủ đề</label>
+            <select id="idcd" name="idcd">
+                <option th:value="NULL">Chọn một chủ đề</option>
+                <option th:each="cd:${dscd}" th:value="${cd.getId()}" th:text="${cd.getTen()}"></option>
+            </select>
+            
+            <button type="submit">Chọn</button>
+        </form>
+        <form th:action="@{/admin/quanLyBV}" method="get">
+            <input name="keyword" type="search" placeholder="Nhập tiêu đề bài viết hoặc từ khóa...">
+            <button type="submit">Search</button>
+        </form>
+        <h2 th:if="${cd.getTen()==null && keyword==null}">Danh sách tất cả bài viết</h2>
+        <h2 th:if="${cd.getTen()!=null}" th:text="'Danh sách bài viết thuộc chủ đề '+${cd.getTen()}"></h2>
+        <h2 th:if="${keyword!=null}" th:text="'Kết quả tìm kiếm cho từ khóa: '+${keyword}"></h2>
+
+-->        <ul>
+            <li th:each="bv:${dsbv}" style="border: black 2px solid; border-radius: 5px;">
+                
+                <div>
+                    <a href="#"><span><h3 th:text="${bv.getTieude()}"></h3></span></a>
+                    <span th:text="' '+${bv.getCd().getTen()}"></span>   
+                </div>
+                <div>
+                    <p th:text="${bv.getTomtat()}"></p>
+                </div>
+                <div>
+                    <span th:text="'Đăng bởi '+${bv.getTk().getUsername()}"></span>
+                    <span th:text="' lúc '+${bv.getTgdang()}"></span>
+                </div>
+                
+                <div>
+                    <a th:href="@{/admin/quanLyBV/{idbv}/reasons (idbv=${bv.getId()})}">Xem lý do</a>
+                </div>
+              
+            </li>
+        </ul><!--
+        <div th:unless="${dsbv.size()!=0}">
+            <p th:if="${keyword==null}">Chủ đề này chưa có bài viết nào.</p>
+            <p th:if="${keyword!=null}" th:text="'Không tìm thấy bài viết nào với từ khóa '+${keyword}"></p>
+        </div>-->
+        
+    </body>
+</html>
