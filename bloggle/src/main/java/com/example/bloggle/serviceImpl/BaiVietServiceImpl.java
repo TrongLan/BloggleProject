@@ -5,7 +5,9 @@
 package com.example.bloggle.serviceImpl;
 
 import com.example.bloggle.entities.BaiViet;
+import com.example.bloggle.entities.Report;
 import com.example.bloggle.repositories.BaiVietRepository;
+import com.example.bloggle.repositories.ReportRepository;
 import com.example.bloggle.services.BaiVietService;
 import java.util.List;
 import org.springframework.data.domain.Sort;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaiVietServiceImpl implements BaiVietService{
     private BaiVietRepository bvRepo;
+    private ReportRepository reportRepo;
 
-    public BaiVietServiceImpl(BaiVietRepository bvRepo) {
+    public BaiVietServiceImpl(BaiVietRepository bvRepo, ReportRepository reportRepo) {
         this.bvRepo = bvRepo;
+        this.reportRepo = reportRepo;
     }
 
     @Override
@@ -42,6 +46,21 @@ public class BaiVietServiceImpl implements BaiVietService{
     @Override
     public BaiViet baiVietCoId(Long id) {
         return bvRepo.getById(id);
+    }
+
+    @Override
+    public void xoaBaiViet(Long id) {
+        bvRepo.deleteById(id);
+    }
+
+    @Override
+    public void danhDauLaKhongBiReport(Long id) {
+        reportRepo.removeReportedPost(id);
+    }
+
+    @Override
+    public List<Report> tatCaReport() {
+        return reportRepo.findAll();
     }
     
 }

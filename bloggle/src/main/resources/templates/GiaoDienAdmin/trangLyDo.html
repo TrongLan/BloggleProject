@@ -38,9 +38,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </table>
         </div>
         <div>
-            <a href="#">Xóa bài viết này khỏi hệ thống</a>
+            <a th:href="@{/admin/xoaBV/{idbv}?m=delete (idbv=${baiviet.getId()})}">Xóa bài viết này khỏi hệ thống</a>
             <br>
-            <a href="#">Bỏ bài viết này ra khỏi danh sách bài viết bị báo cáo</a>
+            <a th:href="@{/admin/xoaBV/{idbv}?m=remove (idbv=${baiviet.getId()})}">Bỏ bài viết này ra khỏi danh sách bài viết bị báo cáo</a>
         </div>
     </body>
 </html>

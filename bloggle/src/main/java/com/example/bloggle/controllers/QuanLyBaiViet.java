@@ -49,4 +49,13 @@ public class QuanLyBaiViet {
         return "GiaoDienAdmin/trangLyDo";
     }
     
+    @GetMapping("/admin/xoaBV/{idbv}")
+    public String xoaBaiViet(@PathVariable Long idbv,@RequestParam(value = "m", required = true) String mode){
+        if(mode.equals("delete"))
+            bvService.xoaBaiViet(idbv);
+        if(mode.equals("remove"))
+            bvService.danhDauLaKhongBiReport(idbv);
+        return "redirect:/admin/quanLyBV?m=report_list";
+    }
+    
 }

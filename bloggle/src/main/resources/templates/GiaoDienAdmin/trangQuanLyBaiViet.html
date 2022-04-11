@@ -37,9 +37,10 @@
         <h2 th:if="${cd.getTen()!=null}" th:text="'Danh sách bài viết thuộc chủ đề '+${cd.getTen()}"></h2>
         <h2 th:if="${keyword!=null}" th:text="'Kết quả tìm kiếm cho từ khóa: '+${keyword}"></h2>
 
--->        <ul>
+-->         
+        <ul th:if="${dsbv.size()!=0}">
             <li th:each="bv:${dsbv}" style="border: black 2px solid; border-radius: 5px;">
-                
+
                 <div>
                     <a href="#"><span><h3 th:text="${bv.getTieude()}"></h3></span></a>
                     <span th:text="' '+${bv.getCd().getTen()}"></span>   
@@ -51,13 +52,16 @@
                     <span th:text="'Đăng bởi '+${bv.getTk().getUsername()}"></span>
                     <span th:text="' lúc '+${bv.getTgdang()}"></span>
                 </div>
-                
+
                 <div>
                     <a th:href="@{/admin/quanLyBV/{idbv}/reasons (idbv=${bv.getId()})}">Xem lý do</a>
                 </div>
-              
             </li>
-        </ul><!--
+        </ul>
+        <div th:unless="${dsbv.size()!=0}">
+            <p>Danh sách trống</p>
+        </div>
+<!--
         <div th:unless="${dsbv.size()!=0}">
             <p th:if="${keyword==null}">Chủ đề này chưa có bài viết nào.</p>
             <p th:if="${keyword!=null}" th:text="'Không tìm thấy bài viết nào với từ khóa '+${keyword}"></p>

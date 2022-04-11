@@ -26,7 +26,7 @@ public class BaiViet implements Comparable<BaiViet>{
     private List<BinhLuan> dsbl;
     @OneToMany(mappedBy = "bv")
     private List<ChamDiem> dscd;
-    @OneToMany(mappedBy = "bv")
+    @OneToMany(mappedBy = "bv", cascade = CascadeType.REMOVE)
     private List<Report> ds_report;
     @ManyToOne
     @JoinColumn(name = "IDTK", nullable = false, columnDefinition = "bigint")

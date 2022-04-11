@@ -34,12 +34,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <tr>
                 <th>Email</th>
                 <th>Tên đăng nhập</th>
+                <th>Số bài viết</th>
                 <th>Hành động</th>
             </tr>
             
             <tr th:each="tk : ${dstk}">
                 <td th:text="${tk.getEmail()}"></td>
                 <td th:text="${tk.getUsername()}"></td>
+                <td th:text="${tk.getDsbv().size()}"></td>
                 <td><a th:href="@{/admin/xoaTK/{id} (id=${tk.getId()})}">Xóa</a></td>
             </tr>
                 
