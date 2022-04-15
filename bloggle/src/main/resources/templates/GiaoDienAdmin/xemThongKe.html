@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Quản lý bài viết</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout">
+            </form>
+            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+        </div>
+
+        <div><a th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a></div>
+        <div>
+            Quản lý bài viết
+            <a th:href="@{/admin/quanLyBV?m=weekly_statistics}">Xem thống kê tháng</a>
+            <a th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
+        </div>
+        <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
+        <hr>
+       <div>
+            Lọc theo chủ đề
+            <div th:each="cd:${dscd}">
+            	<a th:href="@{/admin/quanLyBV?m=weekly_statistics&idcd={id} (id=${cd.getId()})}" th:text="${cd.getTen()}"></a>
+       		</div>
+        </div>
+        <div th:if="${chude.getTen()!=null}">
+	        <h2 th:text="'Bảng xếp hạng các bài viết thuộc chủ đề '+${chude.getTen()}"></h2>
+	        <div th:if="${!dsbv.isEmpty()}">
+	        	<table>
+			        <tr>
+			        	<th>Xếp hạng</th>
+			        	<th>Tiêu đề</th>
+			        	<th>Tài khoản đăng</th>
+			        	<th>Điểm đánh giá</th>
+			        	<th>Số lượt đánh giá</th>
+			        </tr>
+			        <tr th:each="bv, i:${dsbv}">
+			        	<td th:text="${i.count}"></td>
+			        	<td th:text="${bv.getTieude()}"></td>
+			        	<td th:text="${bv.getTk().getUsername()}"></td>
+			        	<td th:text="${bv.diemDanhGia()}+'/5'"></td>
+			        	<td th:text="${bv.soLuotDanhGia()}"></td>
+			        </tr>
+		        </table>
+	        </div>
+		    <div th:unless="${!dsbv.isEmpty()}">
+	        	Chủ đề này không có bài viết nào!
+	        </div>
+        </div>
+    </body>
+</html>

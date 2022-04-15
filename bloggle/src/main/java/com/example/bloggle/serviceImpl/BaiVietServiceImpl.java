@@ -59,8 +59,13 @@ public class BaiVietServiceImpl implements BaiVietService{
     }
 
     @Override
-    public List<Report> tatCaReport() {
-        return reportRepo.findAll();
+    public List<Long> tatCaReport() {
+        return bvRepo.danhSachIdBaiVietBiBaoCao();
     }
+
+	@Override
+	public List<BaiViet> danhSachBaiVietTuanHienTaiTheoChuDe(Long idcd) {
+		return bvRepo.danhSachBaiVietTrongTuanTheoChuDe(idcd);
+	}
     
 }

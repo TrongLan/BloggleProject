@@ -12,5 +12,6 @@ public interface BaiVietService {
     BaiViet baiVietCoId(Long id);
     void xoaBaiViet(Long id);
     void danhDauLaKhongBiReport(Long id);
-    List<Report> tatCaReport();
+    List<Long> tatCaReport();
+    List<BaiViet> danhSachBaiVietTuanHienTaiTheoChuDe(Long idcd);
 }

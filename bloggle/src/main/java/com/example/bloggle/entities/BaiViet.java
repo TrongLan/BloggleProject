@@ -3,12 +3,13 @@ package com.example.bloggle.entities;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "BAIVIET")
-public class BaiViet implements Comparable<BaiViet>{
+public class BaiViet{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +25,7 @@ public class BaiViet implements Comparable<BaiViet>{
     private LocalDateTime tgsua;
     @OneToMany(mappedBy = "bv", cascade = CascadeType.REMOVE)
     private List<BinhLuan> dsbl;
-    @OneToMany(mappedBy = "bv")
+    @OneToMany(mappedBy = "bv", cascade = CascadeType.REMOVE)
     private List<ChamDiem> dscd;
     @OneToMany(mappedBy = "bv", cascade = CascadeType.REMOVE)
     private List<Report> ds_report;
@@ -80,7 +81,7 @@ public class BaiViet implements Comparable<BaiViet>{
         this.tomtat = tomtat;
     }
 
-    public String getTgdang() {
+    public String getTgdangFormat() {
         return tgdang.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
@@ -88,7 +89,15 @@ public class BaiViet implements Comparable<BaiViet>{
         this.tgdang = tgdang;
     }
 
-    public String getTgsua() {
+    public LocalDateTime getTgdang() {
+		return tgdang;
+	}
+
+	public LocalDateTime getTgsua() {
+		return tgsua;
+	}
+
+	public String getTgsuaFormat() {
         return tgsua.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
@@ -129,25 +138,49 @@ public class BaiViet implements Comparable<BaiViet>{
     }
 
     public List<Report> getDs_report() {
-        return ds_report;
+        return this.ds_report;
     }
 
     public void setDs_report(List<Report> ds_report) {
         this.ds_report = ds_report;
     }
     
-//    public String tgFormat(LocalDateTime tg){
-//        return tg.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-//    }
-
-    @Override
-    public int compareTo(BaiViet o) {
-        if(this.getDs_report().size()==o.getDs_report().size())
-            return 0;
-        else
-            if(this.getDs_report().size()>o.getDs_report().size())
-                return -1;
-            else
-                return 1;
+    public int soLuotDanhGia() {
+    	return this.getDscd().size();
+    }
+    
+    public float diemDanhGia() {
+    	float score = 0;
+    	int total = 0, luotDanhGia = this.soLuotDanhGia();
+    	for(ChamDiem d : this.getDscd()) {
+    		total += d.getDiem();
+    	}
+    	if(luotDanhGia>0)
+    		score = (float)total/luotDanhGia;
+    	return (float) Math.round(score*10)/10;
+    }
+    
+    public static class Comparators{
+    	public static Comparator<BaiViet> TGDANG = new Comparator<BaiViet>() {
+    		@Override
+    		public int compare(BaiViet bv1, BaiViet bv2) {
+    			return bv2.getTgdang().compareTo(bv1.getTgdang());
+    		}
+    	};
+    	public static Comparator<BaiViet> DIEMDANHGIA = new Comparator<BaiViet>() {
+    		@Override
+    		public int compare(BaiViet bv1, BaiViet bv2) {
+    			if(bv1.diemDanhGia()==bv2.diemDanhGia())
+    				if(bv1.soLuotDanhGia()>bv2.soLuotDanhGia())
+    					return -1;
+    				else
+    					return 1;
+    			else
+    				if(bv1.diemDanhGia()>bv2.diemDanhGia())
+    					return -1;
+    				else
+    					return 1;
+    		}
+    	};
     }
 }

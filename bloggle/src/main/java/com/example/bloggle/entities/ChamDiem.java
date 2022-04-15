@@ -17,4 +17,23 @@ public class ChamDiem {
     @JoinColumn(name="IDBV", columnDefinition = "bigint", nullable = false)
     @Id
     private BaiViet bv;
+    
+	public int getDiem() {
+		return diem;
+	}
+	public void setDiem(int diem) {
+		this.diem = diem;
+	}
+	public TaiKhoan getTk() {
+		return tk;
+	}
+	public void setTk(TaiKhoan tk) {
+		this.tk = tk;
+	}
+	public BaiViet getBv() {
+		return bv;
+	}
+	public void setBv(BaiViet bv) {
+		this.bv = bv;
+	}
 }

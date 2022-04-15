@@ -24,21 +24,34 @@ public class QuanLyBaiViet {
     }
     
     @GetMapping("/admin/quanLyBV")
-    public String trangQuanLyBV(Model mod, @RequestParam(value = "m", required = true) String mode){
+    public String trangQuanLyBV(Model mod, @RequestParam(value = "m", required = true) String mode, @RequestParam(value = "idcd", required = false) Long idcd){
         List<BaiViet> dsbv = new ArrayList<>();
-//        if(mode!=null){
-            if(mode.equals("report_list")){
-                dsbv = bvService.tatCaBaiViet();
-                List<BaiViet> temp = dsbv;
-                for(int i = 0; i<temp.size(); i++){
-                    if(dsbv.get(i).getDs_report().isEmpty())
-                        dsbv.remove(i);
-                }
-                Collections.sort(dsbv);   
-            }
-//        }   
+        List<ChuDe> dscd = new ArrayList<>();
+        ChuDe cd = new ChuDe();
+        String url = "";
+        if(mode.equals("report_list")){
+            List<Long> ds_idbv = bvService.tatCaReport();
+            if(!ds_idbv.isEmpty())
+            	for(Long id: ds_idbv) {
+            		BaiViet bv = bvService.baiVietCoId(id);
+            		dsbv.add(bv);
+            	}
+            url = "GiaoDienAdmin/danhSachReport";
+        }
+        if(mode.equals("weekly_statistics")) {
+        	dscd = cdService.tatCaChuDe();
+        	if(idcd != null) {
+        		cd = cdService.chuDeCoId(idcd);
+        		dsbv = bvService.danhSachBaiVietTuanHienTaiTheoChuDe(idcd);
+        		Collections.sort(dsbv, BaiViet.Comparators.DIEMDANHGIA);
+        		
+        	}
+        	url = "GiaoDienAdmin/xemThongKe";	
+        }
+        mod.addAttribute("dscd", dscd);
         mod.addAttribute("dsbv", dsbv);
-        return "GiaoDienAdmin/trangQuanLyBaiViet";
+        mod.addAttribute("chude", cd);
+        return url;
     }
     
     @GetMapping("/admin/quanLyBV/{idbv}/reasons")
