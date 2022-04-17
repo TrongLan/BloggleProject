@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+ package com.example.bloggle.entities;
+=======
 package com.example.bloggle.entities;
+>>>>>>> 25d2a53234d69928eac2f3ef1afb0de349a616ad
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,9 +21,15 @@ public class BaiViet {
     private String noidung;
     @Column(name = "TOMTAT", columnDefinition = "nvarchar(MAX)", nullable = false)
     private String tomtat;
+<<<<<<< HEAD
+    @Column(name = "TGDANG", columnDefinition = "smalldatetime", nullable = true)
+    private LocalDateTime tgdang;
+    @Column(name = "TGSUA", columnDefinition = "smalldatetime", nullable = true)
+=======
     @Column(name = "TGDANG", columnDefinition = "smalldatetime", nullable = false)
     private LocalDateTime tgdang;
     @Column(name = "TGSUA", columnDefinition = "smalldatetime", nullable = false)
+>>>>>>> 25d2a53234d69928eac2f3ef1afb0de349a616ad
     private LocalDateTime tgsua;
     @OneToMany(mappedBy = "bv", cascade = CascadeType.REMOVE)
     private List<BinhLuan> dsbl;
@@ -28,10 +38,17 @@ public class BaiViet {
     @OneToMany(mappedBy = "bv")
     private List<Report> ds_report;
     @ManyToOne
+<<<<<<< HEAD
+    @JoinColumn(name = "IDTK", nullable = true, columnDefinition = "bigint")
+    private TaiKhoan tk;
+    @ManyToOne
+    @JoinColumn(name = "IDCD", nullable = true, columnDefinition = "bigint")
+=======
     @JoinColumn(name = "IDTK", nullable = false, columnDefinition = "bigint")
     private TaiKhoan tk;
     @ManyToOne
     @JoinColumn(name = "IDCD", nullable = false, columnDefinition = "bigint")
+>>>>>>> 25d2a53234d69928eac2f3ef1afb0de349a616ad
     private ChuDe cd;
     public BaiViet() {
     }
@@ -134,5 +151,17 @@ public class BaiViet {
     public void setDs_report(List<Report> ds_report) {
         this.ds_report = ds_report;
     }
+<<<<<<< HEAD
+
+    @Override
+    public String toString() {
+        return "BaiViet{" + "id=" + id + ", tieude=" + 
+                tieude + ", noidung=" + noidung + ", tomtat=" + 
+                tomtat + ", tgdang=" + tgdang + ", tgsua=" + 
+                tgsua + ", dsbl=" + dsbl + ", dscd=" + 
+                dscd + ", ds_report=" + ds_report + ", tk=" + tk + ", cd=" + cd + '}';
+    }
+=======
+>>>>>>> 25d2a53234d69928eac2f3ef1afb0de349a616ad
     
 }
