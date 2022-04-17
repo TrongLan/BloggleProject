@@ -1,0 +1,42 @@
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Đăng nhập tài khoản Bloggle</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form th:action="@{/dangNhap}" method="POST">
+            <h2>LOGIN</h2>
+            <p style="color: greenyellow" th:text="${mess}"></p>
+            <div>
+                <input
+                    placeholder="Nhập email hoặc tên đăng nhập." 
+                    type="text"
+                    name="email"
+                    required
+                />
+            </div>
+            <div>
+                <input 
+                    placeholder="Nhập mật khẩu." 
+                    type="password"
+                    name="password"
+                    required
+                />
+            </div>
+            <div>
+                <input
+                    type="checkbox"
+                    name="remember-me"
+                    id="remember"
+                />
+                <label for="remember">Tự động đăng nhập cho lần sau.</label>
+            </div>
+            <p style="color: red" th:text="${err}"></p>
+            <div>
+                <button type="submit">Đăng nhập</button>
+            </div>
+            <p> Chưa có tài khoản? <a href="/dangKy">Đến đăng ký</a>.</p>
+        </form>
+    </body>
+</html>
