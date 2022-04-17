@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Quản lý tài khoản</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <form th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout">
+        </form>
+        <form th:action="@{/admin/quanLyTK}" method="get">
+            <input name="keyword" type="search" placeholder="Nhập email hoặc tên tài khoản...">
+            <button type="submit">Search</button>
+        </form>
+        <p th:if="${dstk.size()==0}" style="color: red;">Không có tài khoản nào.</p>
+        <table th:unless="${dstk.size()==0}">
+            <tr>
+                <th>Email</th>
+                <th>Tên đăng nhập</th>
+                <th>Hành động</th>
+            </tr>
+            
+            <tr th:each="tk : ${dstk}">
+                <td th:text="${tk.getEmail()}"></td>
+                <td th:text="${tk.getUsername()}"></td>
+                <td><a th:href="@{/admin/xoaTK/{id} (id=${tk.getId()})}">Xóa</a></td>
+            </tr>
+                
+            
+        </table>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Quản lý chủ đề</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout">
+        </form>
+        <div>
+            <form th:action="@{/admin/quanLyCD}" method="get">
+                <select name="idcd">
+                    <option th:value="NULL">Chọn một chủ đề</option>
+                    <option th:each="cd:${dscd}" th:value="${cd.getId()}" th:text="${cd.getTen()}"></option>
+                </select>
+                </select>
+                <button type="submit">Chọn</button>
+            </form>
+            <hr>
+            <div th:if="${chude!=null}">
+                <h2><span>Chủ đề:</span> <span th:text="${chude.getTen()}"></span></h2>
+                <p><span><strong>Tổng số bài viết:</strong></span> <span th:text="${chude.getDsbv().size()}"></span></p>
+                <form th:action="@{/admin/capNhatCD}" method="post">
+                    <label>Đổi tên cho chủ đề này</label>
+                    <input name="ten" placeholder="Nhập tên mới..." required/>
+                    <button type="submit">Thay đổi</button>
+                </form>
+            </div>
+            <hr>
+            <form th:action="@{/admin/quanLyCD}" th:object="${chudemoi}" method="post">
+                <label>Thêm chủ đề mới</label>
+                <input th:field="*{ten}" placeholder="Nhập tên chủ đề mới..."/>
+                <button type="submit">Tạo mới</button>
+            </form>
+        </div>
+    </body>
+</html>

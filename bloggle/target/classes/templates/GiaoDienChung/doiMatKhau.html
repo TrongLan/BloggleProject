@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout">
+        </form>
+        <hr>
+        <form th:action="@{/doiMatKhau}" method="post">
+            <label>Mật khẩu hiện tại</label>
+            <input type="password" name="old"/>
+            <p style="color:red" th:text="${e1}"></p>
+            <label>Mật khẩu mới</label>
+            <input type="password" name="new"/>
+            <p style="color:red" th:text="${e2}"></p>
+            <label>Xác nhận mật khẩu mới</label>
+            <input type="password" name="rewrite_new"/>
+            <p style="color:red" th:text="${e3}"></p>
+            
+            <input type="submit" value="Đổi mật khẩu"/>
+        </form>
+    </body>
+</html>

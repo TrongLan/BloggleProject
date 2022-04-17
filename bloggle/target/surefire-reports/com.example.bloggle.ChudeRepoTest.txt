@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.example.bloggle.ChudeRepoTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 6.892 s <<< FAILURE! - in com.example.bloggle.ChudeRepoTest
+themChuDe  Time elapsed: 0.5 s  <<< ERROR!
+java.lang.RuntimeException: Uncompilable source code - Erroneous sym type: com.example.bloggle.entities.ChuDe.setId
+	at com.example.bloggle.ChudeRepoTest.themChuDe(ChudeRepoTest.java:29)
+
