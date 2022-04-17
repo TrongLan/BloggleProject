@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>[[${tieude}]]</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h1>[[${tieude}]]</h1>
+            <h2>[[${tomtat}]]</h2>
+            <p>[[${noidung}]]</p>
+        </div>
+
+        <div>
+            <h2>Bình luận</h2><!-- comment -->
+            <textarea name="binhluan" rows="5" placeholder="Nhập bình luận của bạn" minlength="1" required cols="50" style="height: 132px;"></textarea>
+        </div>
+
+        <div>
+            <h2>Chấm điểm bài viết! (0-5)</h2>
+            <input type="radio" id="html" name="chamdiem" value="1">
+            <label for="1">1</label><br>
+            <input type="radio" id="html" name="chamdiem" value="2">
+            <label for="2">2</label><br>
+            <input type="radio" id="html" name="chamdiem" value="3">
+            <label for="3">3</label><br>
+            <input type="radio" id="html" name="chamdiem" value="4">
+            <label for="4">4</label><br>
+            <input type="radio" id="html" name="chamdiem" value="5">
+            <label for="5">5</label><br>
+        </div>
+    </body>
+</html>

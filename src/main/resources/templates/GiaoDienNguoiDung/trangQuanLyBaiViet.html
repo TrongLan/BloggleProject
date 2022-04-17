@@ -1,0 +1,46 @@
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Quản lý bài viết</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h1>Quản lý bài viết</h1>
+        </div>
+        <form th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout">
+        </form>
+        <hr>
+        <div>
+            <a th:href="@{/user/quanLyBV/newPost}">Thêm bài viết mới</a>
+        </div>
+        <div>
+            <table style="width: 100%">
+                <thread>
+                    <tr>
+                        <th>ID</th><!-- comment -->
+                        <th>Tiêu Đề</th><!-- comment -->
+                        <th></th>
+                    </tr>
+                </thread>
+                <tbody>
+                    <th:block th:each="baiviet : ${listBaiViet}">
+                        <tr>
+                            <td>[[${baiviet.id}]]</td>
+                            <td>[[${baiviet.tieude}]]</td>
+                            <td>
+                                <a th:href="@{'quanLyBV/edit/'} + ${baiviet.id}">Sửa</a>
+                                <a th:href="@{'quanLyBV/delete/'} + ${baiviet.id}">Xoá</a>
+                            </td>
+                        </tr>    
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
