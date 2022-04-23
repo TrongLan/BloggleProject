@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
             .antMatchers("/u","/admin","/doiMatKhau").authenticated()
             .antMatchers("/admin","/admin/**").hasAnyAuthority("admin")
+            .antMatchers("/u/**").hasAnyAuthority("user")
             .anyRequest().permitAll()
             .and()
             .rememberMe().userDetailsService(userDetailsService())
@@ -57,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .defaultSuccessUrl("/u")
                 .permitAll()
             .and()
-            .logout().logoutSuccessUrl("/dangNhap").permitAll();
+            .logout().logoutSuccessUrl("/").permitAll();
     }
 
     @Override

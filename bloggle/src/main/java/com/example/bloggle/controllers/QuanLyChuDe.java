@@ -48,7 +48,6 @@ public class QuanLyChuDe {
     public String doiTenChuDe(HttpServletRequest request){
         HttpSession ss = request.getSession();
         Long id = (Long) ss.getAttribute("idcd");
-        System.out.println(id);
         String ten = request.getParameter("ten");
         ChuDe cd = new ChuDe(id, ten.strip());
         cdService.capNhatChuDe(cd);

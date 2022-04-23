@@ -2,8 +2,6 @@ package com.example.bloggle.controllers;
 
 import com.example.bloggle.entities.TaiKhoan;
 import com.example.bloggle.services.TaiKhoanService;
-import java.nio.charset.StandardCharsets;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,7 +74,7 @@ public class DangKy {
             tk.setUsername(tk.getUsername().strip());
             tk.setRole("user");
             tkService.capNhatTaiKhoan(tk);
-            return "redirect:/";
+            return "redirect:/dangNhap";
         }
         else{
             return "redirect:/dangKy";

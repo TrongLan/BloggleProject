@@ -1,6 +1,6 @@
 <html xmlns:th="https://www.thymeleaf.org">
     <head>
-        <title th:text="'Xin chào ' + ${tk.getUsername()}"></title>
+        <title>Kho bài viết</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -9,23 +9,23 @@
             <form th:action="@{/logout}" method="POST">
                 <input type="submit" value="Logout">
             </form>
-            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a><br>
-            <a th:href="@{/u/danhSachBV}">Quản lý bài viết</a><br>
+            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+            <br>
+            <a th:href="@{/u/danhSachBV}">Quản lý bài viết</a>
+            <br>
             <a th:href="@{/u/editBV}">Đăng tải bài viết mới</a>
         </div>
         <div>
-            <form th:action="@{/u}" method="get">
-                <input name="keyword" type="search" placeholder="Nhập tiêu đề bài viết...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
-        <div>
-            <h2 th:if="${key==null || key.isBlank()}">Bài viết mới</h2>
-            <h2 th:if="${key!=null && !key.isBlank()}">Hiển thị kết quả tìm kiếm cho từ khóa: <span th:text="${key}"></span></h2>
-            <div th:each="bv:${dsbv}">
+            <h2 th:text="'Danh sách bài viết của '+${tk.getUsername()}"></h2>
+            <div th:if="${dsbv.isEmpty()}">
+                Bạn chưa đăng tải bài viết nào. <a th:href="@{/u/editBV}">Tạo bài viết mới</a>
+            </div>
+            <div th:unless="${dsbv.isEmpty()}" th:each="bv:${dsbv}">
                 <div style="border:1px solid black;">
                     <a th:href="@{/xemBV/{idbv} (idbv=${bv.getId()})}" th:text="${bv.getTieude()}"></a>
                     <p><span th:text="${bv.getTgdangFormat()}"></span> <span th:text="${bv.getCd().getTen()}"></span></p>
+                    <a th:href="@{/u/chinhSuaBV/{p} (p=${bv.getId()})}">Chỉnh sửa</a>
+                    <a th:href="@{/u/xoaBV/{idbv} (idbv=${bv.getId()})}">Xóa bài viết</a>
                 </div>
             </div>
         </div>

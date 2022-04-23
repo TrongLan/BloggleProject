@@ -18,22 +18,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </ul>
             </nav>
             <div>
-                <p>Chủ đề nổi bật</p>
-                <ul>
-                    <li><a href="#">Chủ đề 1</a></li>
-                    <li><a href="#">Chủ đề 2</a></li>
-                    <li>...</li>
-                    <li><a href="#">Chủ đề n</a></li>
-                </ul>
+                <h2>Chủ đề nổi bật</h2>
+                <div>
+                    <div th:each="cd:${dscd}">
+                        <a th:href="@{/?idcd={id}(id=${cd.getId()})}" th:text="${cd.getTen()}"></a>
+                    </div>
+                </div>
             </div>
             <div>
-                <p>Khám phá</p>
-                <ul>
-                    <li><a href="#">Bài viết 1</a></li>
-                    <li><a href="#">Bài viết 2</a></li>
-                    <li><a href="#">...</a></li>
-                    <li><a href="#">Bài viết m</a></li>
-                </ul>
+                <h2>
+                    <span th:if="${cd!=null}" th:text="'Khám phá chủ đề '+${cd.getTen()}"></span>
+                    <span th:if="${cd==null && (keyword==null||keyword.isBlank())}">Bài viết mới gần đây</span>
+                    <span th:if="${keyword!=null && !keyword.isBlank()}" th:text="'Kết quả tìm kiếm cho: '+${keyword}"></span>
+                </h2>
+                <div>
+                    <form th:action="@{/}" method="get">
+                        <input name="keyword" type="search" placeholder="Nhập tiêu đề bài viết...">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <div th:each="bv:${dsbv}">
+                    <div style="border:1px solid black;">
+                        <a th:href="@{/xemBV/{idbv} (idbv=${bv.getId()})}" th:text="${bv.getTieude()}"></a>
+                        <p><span th:text="${bv.getTgdangFormat()}"></span> <span th:text="${bv.getCd().getTen()}"></span></p>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

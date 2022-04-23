@@ -1,0 +1,27 @@
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Gửi báo cáo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout">
+            </form>
+            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+            <br>
+            <a th:href="@{/u/danhSachBV}">Quản lý bài viết</a>
+            <br>
+            <a th:href="@{/u/editBV}">Đăng tải bài viết mới</a>
+        </div>
+        <div>
+            <h2>Tôi báo cáo bài viết này với lý do</h2>
+            <form th:object="${report}" method="post" th:action="@{/u/report/{p}(p=${bv.getId()})}">
+                <textarea required th:field="*{lydo}" placeholder="Nhập lý do của bạn..."></textarea>
+                <button type="submit">Gửi</button>
+            </form>
+            
+        </div>
+    </body>
+</html>

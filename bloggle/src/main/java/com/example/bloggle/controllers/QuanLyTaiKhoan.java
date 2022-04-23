@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
@@ -56,8 +58,9 @@ public class QuanLyTaiKhoan {
     @PostMapping("/doiMatKhau")
     public String doiMatKhau(HttpServletRequest request){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        HttpSession ss = request.getSession();
-        TaiKhoan tk = (TaiKhoan) ss.getAttribute("current_acc");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String email = authentication.getName();
+        TaiKhoan tk = tkService.taiKhoanCoEmail(email);
         String oldPassword = request.getParameter("old");
         String newPassword = request.getParameter("new");
         String rewritedNewPassword = request.getParameter("rewrite_new");

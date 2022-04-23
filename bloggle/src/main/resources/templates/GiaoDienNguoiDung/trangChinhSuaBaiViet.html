@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Edit Post</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+        <script src="//cdn.ckeditor.com/4.18.0/full/ckeditor.js"></script>
+        
+    </head>
+    <body>
+        <div>
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout">
+            </form>
+            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+            <br>
+            <a th:href="@{/u/danhSachBV}">Quản lý bài viết</a>
+            <br>
+            <a th:href="@{/u/editBV}">Đăng tải bài viết mới</a>
+        </div>
+        <hr>
+        <form th:action="@{/u/reuploadBV/{p} (p=${bv.getId()})}" method="POST" th:object="${bv}">
+            <div>
+                <select th:field="*{cd}" >
+                    <option th:value="NULL">Chọn một chủ đề</option>
+                    <option th:each="cd:${dscd}" th:value="${cd.getId()}" th:text="${cd.getTen()}"></option>
+                </select> 
+            </div>
+            <div>
+                <input type="text" th:field="*{tieude}" placeholder="Type a title for your post..." required/>
+            </div>
+            <div>
+                <textarea id="editor" name="noidung" type="text" th:field="*{noidung}"></textarea>
+            </div> 
+            <div>
+                <button id="upload" type="submit">Cập nhật thay đổi</button>
+            </div>
+            
+        </form>
+                
+        <script>
+            $(document).ready(function(){
+                CKEDITOR.replace('editor',{
+//                    filebrowserImageUploadUrl:'/image/upload',
+//                    height: 400
+                });
+                
+                CKEDITOR.on('dialogDefinition',function(e){
+                    var dialogName = e.data.name;
+                    var dialogDefinition = e.data.definition;
+                    
+                    switch(dialogName){
+                        case 'image':
+//                            dialogDefinition.removeContents('info');
+                            dialogDefinition.removeContents('Link');
+                            dialogDefinition.removeContents('advanced');
+                            break;
+                    }
+                });
+//                $('#upload').click(function(){
+//                    alert(CKEDITOR.instances.editor.getData());
+//                });
+            });
+        </script>
+    </body>
+   
+</html>

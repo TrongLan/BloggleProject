@@ -17,8 +17,6 @@ public class BaiViet{
     private String tieude;
     @Column(name = "NOIDUNG", columnDefinition = "nvarchar(MAX)", nullable = false)
     private String noidung;
-    @Column(name = "TOMTAT", columnDefinition = "nvarchar(MAX)", nullable = false)
-    private String tomtat;
     @Column(name = "TGDANG", columnDefinition = "smalldatetime", nullable = false)
     private LocalDateTime tgdang;
     @Column(name = "TGSUA", columnDefinition = "smalldatetime", nullable = false)
@@ -38,11 +36,10 @@ public class BaiViet{
     public BaiViet() {
     }
 
-    public BaiViet(Long id, String tieude, String noidung, String tomtat, LocalDateTime tgdang, LocalDateTime tgsua) {
+    public BaiViet(Long id, String tieude, String noidung, LocalDateTime tgdang, LocalDateTime tgsua) {
         this.id = id;
         this.tieude = tieude;
         this.noidung = noidung;
-        this.tomtat = tomtat;
         this.tgdang = tgdang;
         this.tgsua = tgsua;
         this.dsbl = new ArrayList<>();
@@ -71,14 +68,6 @@ public class BaiViet{
 
     public void setNoidung(String noidung) {
         this.noidung = noidung;
-    }
-
-    public String getTomtat() {
-        return tomtat;
-    }
-
-    public void setTomtat(String tomtat) {
-        this.tomtat = tomtat;
     }
 
     public String getTgdangFormat() {

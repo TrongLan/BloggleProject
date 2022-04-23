@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "CHUDE")
-public class ChuDe {
+public class ChuDe implements Comparable<ChuDe>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,6 +47,17 @@ public class ChuDe {
 
     public void setDsbv(List<BaiViet> dsbv) {
         this.dsbv = dsbv;
+    }
+
+    @Override
+    public int compareTo(ChuDe o) {
+        if(this.dsbv.size()==o.getDsbv().size())
+            return 0;
+        else
+            if(this.dsbv.size()>o.getDsbv().size())
+                return -1;
+            else
+                return 1;
     }
     
     

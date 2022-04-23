@@ -9,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 import com.example.bloggle.entities.BaiViet;
 
 public interface BaiVietRepository extends JpaRepository<BaiViet, Long>{
+    @Query(value = "SELECT * FROM BAIVIET WHERE TGDANG >= dateadd(day,datediff(day,3,GETDATE()),0) ORDER BY TGDANG DESC", nativeQuery = true)
+    List<BaiViet> cacBaiVietGanDay();
+    
     @Query(value = "SELECT * FROM BAIVIET WHERE IDCD = :id ORDER BY TGDANG DESC", nativeQuery = true)
     List<BaiViet> cacBaiVietCoChuDe(@Param("id") Long id);
     
@@ -23,5 +26,8 @@ public interface BaiVietRepository extends JpaRepository<BaiViet, Long>{
     
     @Query(value = "SELECT REPORT.IDBV FROM BAIVIET, REPORT WHERE BAIVIET.ID = REPORT.IDBV GROUP BY REPORT.IDBV", nativeQuery = true)
     List<Long> danhSachIdBaiVietBiBaoCao();
-
+    
+    @Query(value = "SELECT * FROM BAIVIET WHERE IDTK = :idtk ORDER BY TGDANG DESC", nativeQuery = true)
+    List<BaiViet> danhSachBaiVietCuaTaiKhoan(@Param("idtk") Long id);
+    
 }

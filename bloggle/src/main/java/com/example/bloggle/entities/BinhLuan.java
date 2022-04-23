@@ -2,6 +2,8 @@ package com.example.bloggle.entities;
 
 import com.example.bloggle.compositekeys.BinhLuanPK;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import javax.persistence.*;
 
 @Entity
@@ -14,8 +16,6 @@ public class BinhLuan {
     private String noidung;
     @Column(name = "TGDANG", columnDefinition = "smalldatetime", nullable = false)
     private LocalDateTime tgdang;
-    @Column(name = "TGSUA", columnDefinition = "smalldatetime", nullable = false)
-    private LocalDateTime tgsua;
     @ManyToOne
     @Id
     @JoinColumn(name = "IDBV", nullable = false, columnDefinition = "bigint")
@@ -27,11 +27,10 @@ public class BinhLuan {
     public BinhLuan() {
     }
 
-    public BinhLuan(Long id, String noidung, LocalDateTime tgdang, LocalDateTime tgsua, BaiViet bv) {
+    public BinhLuan(Long id, String noidung, LocalDateTime tgdang, BaiViet bv) {
         this.id = id;
         this.noidung = noidung;
         this.tgdang = tgdang;
-        this.tgsua = tgsua;
         this.bv = bv;
     }
 
@@ -55,17 +54,13 @@ public class BinhLuan {
     public LocalDateTime getTgdang() {
         return tgdang;
     }
+    
+    public String getTgdangFormat() {
+        return tgdang.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+    }
 
     public void setTgdang(LocalDateTime tgdang) {
         this.tgdang = tgdang;
-    }
-
-    public LocalDateTime getTgsua() {
-        return tgsua;
-    }
-
-    public void setTgsua(LocalDateTime tgsua) {
-        this.tgsua = tgsua;
     }
 
     public BaiViet getBv() {
@@ -75,5 +70,21 @@ public class BinhLuan {
     public void setBv(BaiViet bv) {
         this.bv = bv;
     }
+
+    public TaiKhoan getTk() {
+        return tk;
+    }
+
+    public void setTk(TaiKhoan tk) {
+        this.tk = tk;
+    }
     
+    public static class Comparators{
+    	public static Comparator<BinhLuan> TGDANG = new Comparator<BinhLuan>() {
+                @Override
+                public int compare(BinhLuan o1, BinhLuan o2) {
+                    return o1.getTgdang().compareTo(o2.getTgdang());
+                }
+    	};
+    }
 }

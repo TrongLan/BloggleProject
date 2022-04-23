@@ -15,7 +15,7 @@
         <div><a th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a></div>
         <div>
             Quản lý bài viết
-            <a th:href="@{/admin/quanLyBV?m=weekly_statistics}">Xem thống kê tháng</a>
+            <a th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
             <a th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
         </div>
         <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
@@ -42,11 +42,8 @@
             <li th:each="bv:${dsbv}" style="border: black 2px solid; border-radius: 5px;">
 
                 <div>
-                    <a href="#"><span><h3 th:text="${bv.getTieude()}"></h3></span></a>
+                    <a th:href="@{/xemBV/{id} (id=${bv.getId()})}"><span><h3 th:text="${bv.getTieude()}"></h3></span></a>
                     <span th:text="' '+${bv.getCd().getTen()}"></span>   
-                </div>
-                <div>
-                    <p th:text="${bv.getTomtat()}"></p>
                 </div>
                 <div>
                     <span th:text="'Đăng bởi '+${bv.getTk().getUsername()}"></span>
