@@ -26,8 +26,8 @@
             	<a th:href="@{/admin/quanLyBV?m=weekly_statistics&idcd={id} (id=${cd.getId()})}" th:text="${cd.getTen()}"></a>
        		</div>
         </div>
-        <div th:if="${chude.getTen()!=null}">
-	        <h2 th:text="'Bảng xếp hạng các bài viết thuộc chủ đề '+${chude.getTen()}+' trong tuần này'"></h2>
+        <div th:if="${cd.getTen()!=null}">
+	        <h2 th:text="'Bảng xếp hạng các bài viết thuộc chủ đề '+${cd.getTen()}+' trong tuần này'"></h2>
 	        <div th:if="${!dsbv.isEmpty()}">
 	        	<table>
 			        <tr>

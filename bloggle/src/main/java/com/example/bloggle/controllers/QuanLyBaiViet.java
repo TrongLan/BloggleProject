@@ -1,6 +1,7 @@
 package com.example.bloggle.controllers;
 
 import com.example.bloggle.compositekeys.BinhLuanPK;
+import com.example.bloggle.compositekeys.ReportPK;
 import com.example.bloggle.entities.BaiViet;
 import com.example.bloggle.entities.BinhLuan;
 import com.example.bloggle.entities.ChuDe;
@@ -38,42 +39,42 @@ public class QuanLyBaiViet {
     
     //CHỨC NĂNG QUẢN LÝ BÀI VIẾT CỦA ADMIN
     @GetMapping("/admin/quanLyBV")
-    public String trangQuanLyBV(Model mod, @RequestParam(value = "m", required = true) String mode, @RequestParam(value = "idcd", required = false) Long idcd){
+    public String trangQuanLyBV(Model mod, @RequestParam(value = "m", required = true) String mode, @RequestParam(value = "idcd", required = false) Long idcd, @RequestParam(value = "show_reasons", required = false) Boolean show, @RequestParam(value = "p", required = false) Long idbv){
+        String url = "";
         List<BaiViet> dsbv = new ArrayList<>();
         List<ChuDe> dscd = new ArrayList<>();
+        BaiViet bv = new BaiViet();
         ChuDe cd = new ChuDe();
-        String url = "";
         if(mode.equals("report_list")){
+            url = "GiaoDienAdmin/danhSachReport";
             List<Long> ds_idbv = bvService.tatCaReport();
             if(!ds_idbv.isEmpty())
-            	for(Long id: ds_idbv) {
-            		BaiViet bv = bvService.baiVietCoId(id);
-            		dsbv.add(bv);
-            	}
-            url = "GiaoDienAdmin/danhSachReport";
+                for(Long id: ds_idbv) {
+                    BaiViet temp = bvService.baiVietCoId(id);
+                    dsbv.add(temp);
+                }
+            if(show!=null){
+                if(show && idbv!=null && idbv>0){
+                    bv = bvService.baiVietCoId(idbv);
+                }
+            }
         }
-        if(mode.equals("weekly_statistics")) {
-        	dscd = cdService.tatCaChuDe();
-        	if(idcd != null) {
-        		cd = cdService.chuDeCoId(idcd);
-        		dsbv = bvService.danhSachBaiVietTuanHienTaiTheoChuDe(idcd);
-        		Collections.sort(dsbv, BaiViet.Comparators.DIEMDANHGIA);
-        		
-        	}
-        	url = "GiaoDienAdmin/xemThongKe";	
+        if(mode.equals("weekly_statistics")){
+            url = "GiaoDienAdmin/xemThongKe";
+            dscd = cdService.tatCaChuDe();
+            if(idcd!=null && idcd>0){
+                cd = cdService.chuDeCoId(idcd);
+                dsbv = bvService.danhSachBaiVietTuanHienTaiTheoChuDe(idcd);
+                Collections.sort(dsbv, BaiViet.Comparators.DIEMDANHGIA);  
+            }
         }
-        mod.addAttribute("dscd", dscd);
         mod.addAttribute("dsbv", dsbv);
-        mod.addAttribute("chude", cd);
+        mod.addAttribute("show", show);
+        mod.addAttribute("bv", bv);
+        mod.addAttribute("dscd", dscd);
+        mod.addAttribute("cd", cd);
+        mod.addAttribute("report_exist", bvService.isReported(idbv));
         return url;
-    }
-    
-    @GetMapping("/admin/quanLyBV/{idbv}/reasons")
-    public String xemLyDoBaoCao(Model mod, @PathVariable("idbv") Long idbv){
-        BaiViet bv = bvService.baiVietCoId(idbv);
-        System.out.println(bv.getTieude());
-        mod.addAttribute("baiviet", bv);
-        return "GiaoDienAdmin/trangLyDo";
     }
     
     @GetMapping("/admin/xoaBV/{idbv}")
@@ -138,9 +139,6 @@ public class QuanLyBaiViet {
     
     @PostMapping("/u/reuploadBV/{p}")
     public String reuploadBaiViet(BaiViet bv, @PathVariable("p") Long id){
-//    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    	String email = authentication.getName();
-//        TaiKhoan tk = tkService.taiKhoanCoEmail(email);
         BaiViet baiviet = bvService.baiVietCoId(id);
         bv.setTk(baiviet.getTk());
         bv.setTgdang(baiviet.getTgdang());

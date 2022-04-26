@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.bloggle.serviceImpl;
 
 import com.example.bloggle.compositekeys.BinhLuanPK;
@@ -142,5 +138,14 @@ public class BaiVietServiceImpl implements BaiVietService{
     @Override
     public Report luuReport(Report r) {
         return reportRepo.save(r);
+    }
+    
+    @Override
+    public boolean isReported(Long idbv){
+        List<Report> ds = reportRepo.findReportByIdbv(idbv);
+        if(ds.isEmpty())
+            return false;
+        else
+            return true;
     }
 }

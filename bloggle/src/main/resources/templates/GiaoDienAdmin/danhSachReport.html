@@ -20,24 +20,7 @@
         </div>
         <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
         <hr>
-<!--        <form th:action="@{/admin/quanLyBV}" method="get">
-            <label for="idcd">Lọc theo chủ đề</label>
-            <select id="idcd" name="idcd">
-                <option th:value="NULL">Chọn một chủ đề</option>
-                <option th:each="cd:${dscd}" th:value="${cd.getId()}" th:text="${cd.getTen()}"></option>
-            </select>
-            
-            <button type="submit">Chọn</button>
-        </form>
-        <form th:action="@{/admin/quanLyBV}" method="get">
-            <input name="keyword" type="search" placeholder="Nhập tiêu đề bài viết hoặc từ khóa...">
-            <button type="submit">Search</button>
-        </form>
-        <h2 th:if="${cd.getTen()==null && keyword==null}">Danh sách tất cả bài viết</h2>
-        <h2 th:if="${cd.getTen()!=null}" th:text="'Danh sách bài viết thuộc chủ đề '+${cd.getTen()}"></h2>
-        <h2 th:if="${keyword!=null}" th:text="'Kết quả tìm kiếm cho từ khóa: '+${keyword}"></h2>
-
--->         
+        
         <ul th:if="${dsbv.size()!=0}">
             <li th:each="bv:${dsbv}" style="border: black 2px solid; border-radius: 5px;">
 
@@ -51,18 +34,32 @@
                 </div>
 
                 <div>
-                    <a th:href="@{/admin/quanLyBV/{idbv}/reasons (idbv=${bv.getId()})}">Xem lý do</a>
+                    <a th:href="@{/admin/quanLyBV?m=report_list&show_reasons=true&p={idbv} (idbv=${bv.getId()})}">Xem lý do</a>
                 </div>
             </li>
         </ul>
         <div th:unless="${dsbv.size()!=0}">
             <p>Danh sách trống</p>
         </div>
-<!--
-        <div th:unless="${dsbv.size()!=0}">
-            <p th:if="${keyword==null}">Chủ đề này chưa có bài viết nào.</p>
-            <p th:if="${keyword!=null}" th:text="'Không tìm thấy bài viết nào với từ khóa '+${keyword}"></p>
-        </div>-->
-        
+        <div th:if="${show==true && report_exist==true}">
+            <div>
+                <table>
+                    <tr>
+                        <th>Tên tài khoản</th>
+                        <th>Lý do</th>
+                    </tr>
+                    <tr th:each="report:${bv.getDs_report()}">
+                        <td th:text="${report.getTk().getUsername()}"></td>
+                        <td th:text="${report.getLydo()}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <a th:href="@{/admin/xoaBV/{idbv}?m=delete (idbv=${bv.getId()})}">Xóa bài viết này khỏi hệ thống</a>
+                <br>
+                <a th:href="@{/admin/xoaBV/{idbv}?m=remove (idbv=${bv.getId()})}">Bỏ bài viết này ra khỏi danh sách bài viết bị báo cáo</a>
+            </div>
+        </div>
+            
     </body>
 </html>

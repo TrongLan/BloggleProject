@@ -32,4 +32,5 @@ public interface BaiVietService {
     boolean daReport(ReportPK rpk);
     ChamDiem layChamDiem(ChamDiemPK cdpk);
     Report layReport(ReportPK rpk);
+    boolean isReported(Long idbv);
 }
