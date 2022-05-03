@@ -3,40 +3,89 @@
         <title>Đăng nhập tài khoản Bloggle</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            body{
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+            #brand{
+                border-right: 2px gray solid;
+                padding: 50px 100px;
+            }
+            #brand h1{
+                font-size: 72px;
+                font-weight: bold;
+            }
+            #brand p{
+                font-size: 20px;
+                font-style: italic;
+                color: gray;
+            }
+            #message{
+                font-style: italic;
+                color: red;
+                font-size: 12px;
+            }
+            #action{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 10px 0;
+            }
+            .row{
+                width: 500px;
+            }
+            .input_container{
+                margin: 10px 0;
+            }
+        </style>
     </head>
     <body>
-        <form th:action="@{/dangNhap}" method="POST">
-            <h2>LOGIN</h2>
-            <p style="color: greenyellow" th:text="${mess}"></p>
-            <div>
-                <input
-                    placeholder="Nhập email hoặc tên đăng nhập." 
-                    type="text"
-                    name="email"
-                    required
-                />
-            </div>
-            <div>
-                <input 
-                    placeholder="Nhập mật khẩu." 
-                    type="password"
-                    name="password"
-                    required
-                />
-            </div>
-            <div>
-                <input
-                    type="checkbox"
-                    name="remember-me"
-                    id="remember"
-                />
-                <label for="remember">Tự động đăng nhập cho lần sau.</label>
-            </div>
-            <p style="color: red" th:text="${err}"></p>
-            <div>
-                <button type="submit">Đăng nhập</button>
-            </div>
-            <p> Chưa có tài khoản? <a href="/dangKy">Đến đăng ký</a>.</p>
-        </form>
+        <div id="brand">
+            <h1>BLOGGLE</h1>
+            <p>Nơi bạn chia sẻ thông tin, kiến thức của mình với mọi người</p>
+        </div>
+        <div>
+            <form th:action="@{/dangNhap}" method="POST" class="row g-3">
+                <div class="col-md-8 input_container">
+                    <input
+                        class="form-control"
+                        placeholder="Nhập email hoặc tên đăng nhập." 
+                        type="text"
+                        name="email"
+                        required
+                    />
+                </div>
+                <div class="col-md-8 input_container">
+                    <input
+                        class="form-control"
+                        placeholder="Nhập mật khẩu." 
+                        type="password"
+                        name="password"
+                        required
+                    />
+                </div>
+                <p class="col-md-8" th:text="${err}" id="message"></p>
+                <div class="col-md-8">
+                    <input
+                        type="checkbox"
+                        name="remember-me"
+                        id="remember"
+                    />
+                    <label for="remember">Duy trì đăng nhập</label>
+                </div>
+                
+                <div class="col-md-8" id="action">
+                    <a href="/dangKy">Đăng ký</a>
+                    <input class="btn btn-primary" type="submit" value="Đăng nhập">
+                </div>
+                
+            </form>
+        </div>
+            
     </body>
 </html>

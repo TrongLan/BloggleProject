@@ -23,9 +23,9 @@ public class TaiKhoan {
     private List<BinhLuan> dsbl;
     @OneToMany(mappedBy = "tk", cascade = CascadeType.REMOVE)
     private List<BaiViet> dsbv;
-    @OneToMany(mappedBy = "tk")
+    @OneToMany(mappedBy = "tk", cascade = CascadeType.REMOVE)
     private List<ChamDiem> dscd;
-    @OneToMany(mappedBy = "tk")
+    @OneToMany(mappedBy = "tk", cascade = CascadeType.REMOVE)
     private List<Report> ds_report;
     public TaiKhoan() {
     }

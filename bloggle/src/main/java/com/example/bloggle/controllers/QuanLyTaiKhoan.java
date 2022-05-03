@@ -52,6 +52,7 @@ public class QuanLyTaiKhoan {
         mod.addAttribute("e1",pw_err1);
         mod.addAttribute("e2",pw_err2);
         mod.addAttribute("e3",pw_err3);
+        pw_err1 = "";pw_err2 = "";pw_err3 = "";
         return "GiaoDienChung/doiMatKhau";
     }
     
