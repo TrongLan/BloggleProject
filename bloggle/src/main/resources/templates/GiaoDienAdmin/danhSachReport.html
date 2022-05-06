@@ -3,63 +3,233 @@
         <title>Quản lý bài viết</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            body{
+                background-color: rgb(227, 229, 231);
+            }
+            .navbar-brand{
+                font-size: 24px;
+                font-weight: bold;
+                padding-right: 25px;
+                border-right: 2px gray solid;
+            }
+            .acc-setting{
+                width: 150px;
+                text-align: center;
+            }
+            #content-container{
+                margin-top: 50px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+            #dsbc{
+                width: 60%;
+            }
+            #reason-table{
+                width: 30%;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 50px;
+                border-left: 2px grey solid;
+            }
+            .post{
+                background-color: whitesmoke;
+                border-radius: 10px;
+                margin: 10px auto;
+                width: 95%;
+            }
+            #dsbv{
+                margin-top: 10px;
+                height: 450px;
+                overflow: scroll;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            #listname{
+                text-align: center;
+                padding-bottom: 10px;
+                border-bottom: 2px solid grey;
+            }
+            .row1{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .row1 div{
+                /*border: 1px red solid;*/
+                width: 80%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 10px 0;
+            }
+            .row1 div a{
+                padding-right: 10px;
+                text-align: left;
+            }
+            .topic_name{
+                font-size: 12px;
+                padding: 2px 5px;
+                background-color: lightskyblue;
+                color: white;
+                border-radius: 3px;
+            }
+            .datetime{             
+                width: 120px;
+                font-size: 14px;
+                padding: 5px;
+                text-align: center;
+                color: graytext;
+                font-style: italic;
+            }
+            .p_title{
+                color: black;
+                font-size: 24px;
+                font-weight: 600;
+            }
+            .p_title :hover{
+                color: lightskyblue;
+                text-decoration: none;
+            }
+            .row2{
+                display: flex;
+                justify-content: space-between;
+            }
+            .row2 div{
+                padding: 5px 0;
+                color: graytext;
+                font-size: 14px;
+            }
+            .row2 span{
+                font-weight: bold;
+                font-style: italic;
+            }
+            #scroll{
+                max-height: 350px;
+                overflow: scroll;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            thead{
+                position: sticky;
+                top: -1px;
+            }
+            #ds-trong{
+                text-align: center;
+                margin: 50px;
+            }
+            #ds-trong img{
+                margin: 50px auto;
+            }
+            #ds-trong p{
+                font-size: 20px;
+                color: rgb(160,165,170);
+            }
+            #report-status{
+                text-align: center;
+                font-size: 18px;
+                margin: 0 auto 20 auto;
+            }
+            #action{
+                margin-top: 30px;
+                display: flex;
+                justify-content: space-around;
+            }
+            footer{
+                position: fixed;
+                bottom:0;
+                width: 100%;
+            }
+        </style>
     </head>
     <body>
-        <div>
-            <form th:action="@{/logout}" method="POST">
-                <input type="submit" value="Logout">
-            </form>
-            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
-        </div>
-
-        <div><a th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a></div>
-        <div>
-            Quản lý bài viết
-            <a th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
-            <a th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
-        </div>
-        <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
-        <hr>
-        
-        <ul th:if="${dsbv.size()!=0}">
-            <li th:each="bv:${dsbv}" style="border: black 2px solid; border-radius: 5px;">
-
-                <div>
-                    <a th:href="@{/xemBV/{id} (id=${bv.getId()})}"><span><h3 th:text="${bv.getTieude()}"></h3></span></a>
-                    <span th:text="' '+${bv.getCd().getTen()}"></span>   
+        <nav class="navbar navbar-expand-lg bg-secondary">
+            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between;">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý bài viết</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
+                            <a class="dropdown-item" th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white acc-setting" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bloggle</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+                        <form class="dropdown-item" th:action="@{/logout}" method="POST">
+                            <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
+                        </form>
+                    </div>
                 </div>
-                <div>
-                    <span th:text="'Đăng bởi '+${bv.getTk().getUsername()}"></span>
-                    <span th:text="' lúc '+${bv.getTgdang()}"></span>
-                </div>
-
-                <div>
-                    <a th:href="@{/admin/quanLyBV?m=report_list&show_reasons=true&p={idbv} (idbv=${bv.getId()})}">Xem lý do</a>
-                </div>
-            </li>
-        </ul>
-        <div th:unless="${dsbv.size()!=0}">
-            <p>Danh sách trống</p>
-        </div>
-        <div th:if="${show==true && report_exist==true}">
-            <div>
-                <table>
-                    <tr>
-                        <th>Tên tài khoản</th>
-                        <th>Lý do</th>
-                    </tr>
-                    <tr th:each="report:${bv.getDs_report()}">
-                        <td th:text="${report.getTk().getUsername()}"></td>
-                        <td th:text="${report.getLydo()}"></td>
-                    </tr>
-                </table>
             </div>
-            <div>
-                <a th:href="@{/admin/xoaBV/{idbv}?m=delete (idbv=${bv.getId()})}">Xóa bài viết này khỏi hệ thống</a>
-                <br>
-                <a th:href="@{/admin/xoaBV/{idbv}?m=remove (idbv=${bv.getId()})}">Bỏ bài viết này ra khỏi danh sách bài viết bị báo cáo</a>
+        </nav>
+        <div id="content-container">
+            <div id="dsbc">
+                <div id="listname">
+                    <h2>Danh sách bài viết bị báo cáo</h2>
+                </div>
+                <div id="dsbv" th:if="${dsbv.size()!=0}">
+                    <div class="container post" th:each="bv:${dsbv}">
+                        <div class="row1">
+                            <div>
+                                <a class="p_title" th:href="@{/xemBV/{idbv} (idbv=${bv.getId()})}" th:text="${bv.getTieude()}">
+                                </a>
+                                <p class="topic_name"th:text="${bv.getCd().getTen()}"></p>
+                            </div>
+                            <p class="datetime" th:text="${bv.getTgdangFormat()}"></p>
+                        </div>
+                        <div class="row2">
+                            <div>Đăng tải bởi <span th:text="${bv.getTk().getUsername()}"></span></div>
+                            <a th:href="@{/admin/quanLyBV?m=report_list&show_reasons=true&p={idbv} (idbv=${bv.getId()})}">Xem lý do</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="ds-trong" th:unless="${dsbv.size()!=0}">
+                    <img src="/images/empty-paper.png" alt="This is a blank paper." width="200px"/>
+                    <p>Tuyệt vời! Không có bài viết nào bị báo cáo cả.</p>
+                </div>
+            </div>
+            <div id="reason-table" th:if="${show==true && report_exist==true}">
+                <div id="report-status">Bài viết này bị báo cáo bởi <strong th:text="${bv.getDs_report().size()}"></strong> tài khoản khác</div>
+                <div id="scroll">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Tên tài khoản</th>
+                                <th>Lý do</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="report:${bv.getDs_report()}">
+                                <td th:text="${report.getTk().getUsername()}"></td>
+                                <td th:text="${report.getLydo()}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="action">
+                    <a class="btn btn-danger" th:href="@{/admin/xoaBV/{idbv}?m=delete (idbv=${bv.getId()})}">Xóa bài viết</a>
+                    <a class="btn btn-success" th:href="@{/admin/xoaBV/{idbv}?m=remove (idbv=${bv.getId()})}">Hủy báo cáo</a>
+                </div>
             </div>
         </div>
-            
+        <footer class="bg-light text-center text-lg-start">
+            <div class="text-center p-3 text-secondary">
+              © 2022 Copyright: BLOGGLE
+            </div>
+        </footer>
     </body>
 </html>

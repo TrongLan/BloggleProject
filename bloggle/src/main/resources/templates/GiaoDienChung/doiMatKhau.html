@@ -13,6 +13,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <style>
             body{
+                background-color: rgb(227, 229, 231);
             }
             .navbar-brand{
                 font-size: 24px;
@@ -27,7 +28,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 border-radius: 20px;
                 margin-top: 0;
                 margin-bottom: 20px;
-                background-color: lightskyblue;
+                background-color: rgb(173, 178, 182);
                 color: whitesmoke;
                 text-align: center;
             }
@@ -60,10 +61,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="display: flex; justify-content: space-between;">
-            <a class="navbar-brand" th:href="@{/u}">BLOGGLE</a>
+        <nav class="navbar navbar-expand-lg bg-secondary" style="display: flex; justify-content: space-between;">
+            <a class="navbar-brand text-white" th:href="@{/u}">BLOGGLE</a>
             <form th:action="@{/logout}" method="POST">
-                <input class="btn btn-primary" type="submit" value="Logout">
+                <input class="btn btn-outline-light" type="submit" value="Logout">
             </form>
         </nav>
         
@@ -101,7 +102,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
                 <p class="message" th:text="${e3}"></p>
                 <div class="col-md-12" id="action">
-                    <button class="btn btn-primary" type="submit">Xác nhận</button>
+                    <button class="btn btn-outline-primary" type="submit">Xác nhận</button>
                 </div>   
             </form>
         </div>

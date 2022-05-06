@@ -8,44 +8,126 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <title>Quản lý tài khoản</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            body{
+                background-color: rgb(227, 229, 231);
+            }
+            .navbar{
+                position: sticky;
+                top:0;
+            }
+            .navbar-brand{
+                font-size: 24px;
+                font-weight: bold;
+                padding-right: 25px;
+                border-right: 2px rgb(184, 190, 195) solid;
+            }
+            .acc-setting{
+                width: 150px;
+                text-align: center;
+            }
+            #content{
+                padding: 20px 200px;
+            }
+            #row1{
+                display:flex;
+                justify-content: space-between;
+                padding: 30px 0px 20px 0px;
+            }
+            .table-responsive{
+                max-height: 500px;
+            }
+            thead{
+                position: sticky;
+                top: -1px;
+            }
+            .action{
+                text-align: center;
+            }
+            footer{
+                position: fixed;
+                bottom:0;
+                width: 100%;
+            }
+        </style>
     </head>
     <body>
         
-        <div>
-            <form th:action="@{/logout}" method="POST">
-                <input type="submit" value="Logout">
-            </form>
-            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
-        </div>
-
-        <div><a th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a></div>
-        <div>
-            Quản lý bài viết
-            <a th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
-            <a th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
-        </div>
-        <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
-        <form th:action="@{/admin/quanLyTK}" method="get">
-            <input name="keyword" type="search" placeholder="Nhập email hoặc tên tài khoản...">
-            <button type="submit">Search</button>
-        </form>
-        <p th:if="${dstk.size()==0}" style="color: red;">Không có tài khoản nào.</p>
-        <table th:unless="${dstk.size()==0}">
-            <tr>
-                <th>Email</th>
-                <th>Tên đăng nhập</th>
-                <th>Số bài viết</th>
-                <th></th>
-            </tr>
-            
-            <tr th:each="tk : ${dstk}">
-                <td th:text="${tk.getEmail()}"></td>
-                <td th:text="${tk.getUsername()}"></td>
-                <td th:text="${tk.getDsbv().size()}"></td>
-                <td><a th:href="@{/admin/xoaTK/{id} (id=${tk.getId()})}">Xóa</a></td>
-            </tr>
+        <nav class="navbar navbar-expand-lg bg-secondary">
+            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý bài viết</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
+                            <a class="dropdown-item" th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white acc-setting" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bloggle</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+                        <form class="dropdown-item" th:action="@{/logout}" method="POST">
+                            <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <div id="content">
+            <div id="row1">
+                <h3>Quản lý tài khoản</h3>
+                <div>
+                    <form class="input-group" th:action="@{/admin/quanLyTK}" method="get">
+                        <input class="form-control col-md-10" name="keyword" type="search" placeholder="Email/tên tài khoản...">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>       
+            </div>
+            <div id="dstk" th:if="${dstk.size()==0}" style="color: red;">Không có tài khoản nào.</div>
+            <div class="table-responsive">
+                <table class = "table table-bordered table-striped" th:unless="${dstk.size()==0}">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>STT</th>
+                            <th>Email</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Số bài viết</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tk, i : ${dstk}">
+                            <td th:text="${i.count}"></td>
+                            <td th:text="${tk.getEmail()}"></td>
+                            <td th:text="${tk.getUsername()}"></td>
+                            <td th:text="${tk.getDsbv().size()}"></td>
+                            <td class="action"><a class="btn btn-danger" th:href="@{/admin/xoaTK/{id} (id=${tk.getId()})}">Xóa</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                    
+            </div>
                 
-            
-        </table>
+        </div>
+        <footer class="bg-light text-center text-lg-start">
+            <div class="text-center p-3 text-secondary">
+              © 2022 Copyright: BLOGGLE
+            </div>
+        </footer>                 
     </body>
 </html>

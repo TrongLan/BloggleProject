@@ -8,47 +8,135 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <title>Quản lý chủ đề</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            body{
+                background-color: rgb(227, 229, 231);
+            }
+            .navbar-brand{
+                font-size: 24px;
+                font-weight: bold;
+                padding-right: 25px;
+                border-right: 2px rgb(184, 190, 195) solid;
+            }
+            .acc-setting{
+                width: 150px;
+                text-align: center;
+            }
+            #content{
+                text-align: center;
+                padding: 100px;
+                width: 70%;
+                margin: auto;
+            }
+            #row1{
+                width: 50%;
+                margin: auto;
+            }
+            #row2{
+                display: flex;
+                justify-content: space-around;
+                margin-top: 50px;
+                text-align: left;
+                
+            }
+            .form-one-line{
+                display:flex;
+                justify-content: space-around;
+                align-items: flex-start;
+            }
+            #row2 div{
+                min-width: 50%;
+            }
+            .card-header, #form-name{
+                text-align: center;
+            }
+            footer{
+                position: fixed;
+                bottom:0;
+                width: 100%;
+            }
+        </style>
     </head>
     <body>
-        <div>
-            <form th:action="@{/logout}" method="POST">
-                <input type="submit" value="Logout">
-            </form>
-            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
-        </div>
-
-        <div><a th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a></div>
-        <div>
-            Quản lý bài viết
-            <a th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
-            <a th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
-        </div>
-        <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
-        <div>
-            <form th:action="@{/admin/quanLyCD}" method="get">
-                <select name="idcd">
-                    <option th:value="NULL">Chọn một chủ đề</option>
-                    <option th:each="cd:${dscd}" th:value="${cd.getId()}" th:text="${cd.getTen()}"></option>
-                </select>
-                </select>
-                <button type="submit">Chọn</button>
-            </form>
-            <hr>
-            <div th:if="${chude!=null}">
-                <h2><span>Chủ đề:</span> <span th:text="${chude.getTen()}"></span></h2>
-                <p><span><strong>Tổng số bài viết:</strong></span> <span th:text="${chude.getDsbv().size()}"></span></p>
-                <form th:action="@{/admin/capNhatCD}" method="post">
-                    <label>Đổi tên cho chủ đề này</label>
-                    <input name="ten" placeholder="Nhập tên mới..." required/>
-                    <button type="submit">Thay đổi</button>
-                </form>
+        <nav class="navbar navbar-expand-lg bg-secondary">
+            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white acc-setting" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý bài viết</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
+                            <a class="dropdown-item" th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white acc-setting" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bloggle</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+                        <form class="dropdown-item" th:action="@{/logout}" method="POST">
+                            <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <hr>
-            <form th:action="@{/admin/quanLyCD}" th:object="${chudemoi}" method="post">
-                <label>Thêm chủ đề mới</label>
-                <input th:field="*{ten}" placeholder="Nhập tên chủ đề mới..." required/>
-                <button type="submit">Tạo mới</button>
+        </nav>
+        <div id="content">
+            <h4>Thêm chủ đề mới</h4>
+            <form class="form-one-line" id="row1" th:action="@{/admin/quanLyCD}" th:object="${chudemoi}" method="post">
+                
+                <input class="form-control col-md-8" th:field="*{ten}" placeholder="Nhập tên chủ đề mới..." required/>
+                <button class="btn btn-primary" type="submit">Thêm</button>
             </form>
+            <hr>
+            <div id="row2">
+                <form class="form-one-line" th:action="@{/admin/quanLyCD}" method="get">
+                    <select class="form-control col-md-8" name="idcd" aria-label=".form-select-lg example">
+                        <option selected th:value="NULL">Chọn một chủ đề</option>
+                        <option th:each="cd:${dscd}" th:value="${cd.getId()}" th:text="${cd.getTen()}"></option>
+                    </select>
+                    <button class="btn btn-primary" type="submit">Chọn</button>
+                </form>
+                
+                <div th:if="${chude!=null}" class="card">
+                    <div class="card-header">
+                        Thông tin chủ đề
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${chude.getTen()}"></h5>
+                        <p class="card-text"><span><strong>Tổng số bài viết:</strong></span> <span th:text="${chude.getDsbv().size()}"></span></p>
+                        <hr>
+                        <p class="card-text" id="form-name"><i>Đổi tên cho chủ đề này</i></p>
+                        <form class="form g-3 form-one-line" th:action="@{/admin/capNhatCD}" method="post">
+                            <input class="col-md-8 form-control" name="ten" placeholder="Nhập tên mới..." required/>
+                            <button class="btn btn-primary" type="submit">Thay đổi</button>
+                        </form>
+                    </div>
+                </div> 
+                <div th:unless="${chude!=null}" class="card">
+                    <div class="card-header">
+                        Thông tin chủ đề
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Hãy chọn một chủ đề</h5>
+                    </div>
+                </div> 
+            </div>
+                  
         </div>
+        <footer class="bg-light text-center text-lg-start">
+            <div class="text-center p-3 text-secondary">
+              © 2022 Copyright: BLOGGLE
+            </div>
+        </footer> 
     </body>
 </html>

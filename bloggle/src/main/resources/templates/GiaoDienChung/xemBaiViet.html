@@ -9,16 +9,28 @@
         <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <style>
+            body{
+                background-color: rgb(227, 229, 231);
+            }
+            .navbar{
+                position: sticky;
+                top: 0;
+            }
             .navbar-brand{
                 font-size: 24px;
                 font-weight: bold;
                 padding-right: 25px;
-                border-right: 2px gray solid;
+                border-right: 2px rgb(184, 190, 195) solid;
+            }
+            .acc-setting{
+                width: 150px;
+                text-align: center;
             }
             #element-container{
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
+                margin: 20px auto;
             }
             #post-container{
                 border-right: 2px gray solid;
@@ -77,6 +89,7 @@
                 overflow-y: auto;
                 text-align: justify;
                 margin-top: 20px;
+                padding-right: 20px;
             }
             #cmt-container{
                 height: 60%;
@@ -134,6 +147,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                margin: auto;
             }
             #rate{
                 /*border: yellow solid 1px;*/
@@ -176,29 +190,30 @@
             .rating .star:hover {
                     transform: scale(1.1);
             }
+            
         </style>
     </head>
     <body>
-        <nav th:if="${user_type==0}" class="navbar navbar-expand-lg navbar-light bg-light" style="display: flex; justify-content: space-between;">
-            <a class="navbar-brand" href="/">BLOGGLE</a>
+        <nav th:if="${user_type==0}" class="navbar navbar-expand-lg bg-secondary" style="display: flex; justify-content: space-between;">
+            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
             <div class="btn-group" style="display: flex; justify-content: space-between;">
-                <a class="nav-link btn btn-outline-primary" href="/dangNhap">Đăng nhập</a>
-                <a class="nav-link btn btn-outline-primary" href="/dangKy">Đăng ký</a>
+                <a class="nav-link btn btn-outline-light" href="/dangNhap">Đăng nhập</a>
+                <a class="nav-link btn btn-outline-light" href="/dangKy">Đăng ký</a>
             </div>
         </nav>
-        <nav th:if="${user_type==2}" class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">BLOGGLE</a>
+        <nav th:if="${user_type==2}" class="navbar navbar-expand-lg bg-secondary">
+            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-around; column-gap: 1024px">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/u/danhSachBV}">Kho bài viết</a>
+                        <a class="nav-link text-white" th:href="@{/u/danhSachBV}">Kho bài viết</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/u/editBV}">Đăng tải</a>
+                        <a class="nav-link text-white" th:href="@{/u/editBV}">Đăng tải</a>
                     </li>
                 </ul>
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${tk.getUsername()}"></a>
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${tk.getUsername()}"></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
                         <form class="dropdown-item" th:action="@{/logout}" method="POST">
@@ -208,23 +223,35 @@
                 </div>
             </div>
         </nav>
-        <div th:if="${user_type==1}">
-            <div>
-                <form th:action="@{/logout}" method="POST">
-                    <input type="submit" value="Logout">
-                </form>
-                <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+        <nav th:if="${user_type==1}" class="navbar navbar-expand-lg bg-secondary">
+            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between;">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white acc-setting" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý bài viết</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
+                            <a class="dropdown-item" th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${tk.getUsername()}"></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+                        <form class="dropdown-item" th:action="@{/logout}" method="POST">
+                            <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div><a th:href="@{/admin/quanLyTK}">Quản lý tài khoản</a></div>
-            <div>
-                Quản lý bài viết
-                <a th:href="@{/admin/quanLyBV?m=weekly_statistics}">BXH bài viết trong tuần</a>
-                <a th:href="@{/admin/quanLyBV?m=report_list}">Các bài viết bị báo cáo</a>
-            </div>
-            <div><a th:href="@{/admin/quanLyCD}">Quản lý chủ đề</a></div>
-        </div>
-
+        </nav>
         
         <div id="element-container">
             <div id="post-container">
@@ -269,7 +296,7 @@
                 <div id="cmt-container" th:unless="${!dsbl.isEmpty()}">
                     <p th:if="${user_type==2 || user_type==0}">Bài viết này chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
                     <p th:if="${user_type==1}">Bài viết này chưa có bình luận nào.</p>
-
+                    <img style="display: block; width: 60%; margin: 20px auto 0 auto;" src="/images/comment.png" alt="comment icon"/>
                 </div>
                 
                 <div id="cmt-upload" th:if="${user_type==2}">
@@ -329,7 +356,50 @@
                 </div>
             </div>
         </div>
-                  
+        <footer th:if="${user_type==1}" class="bg-light text-center text-lg-start">
+            <div class="text-center p-3 text-secondary">
+              © 2022 Copyright: BLOGGLE
+            </div>
+        </footer>
+        <footer th:if="${user_type==0 || user_type==2}" class="bg-light text-center text-lg-start">
+            <!-- Grid container -->
+            <div class="container p-4">
+              <!--Grid row-->
+              <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                  <h5 class="text-uppercase">Giới thiệu Bloggle</h5>
+
+                  <p style="text-align: left">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                    aliquam voluptatem veniam, est atque cumque eum delectus sint!
+                  </p>
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                  <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+                  <p style="text-align: left">
+                    Mọi vấn đề và ý kiến đóng góp liên quan đến việc cải thiện Bloggle
+                    vui lòng gửi vào email <strong>bloggle.support@gmail.com</strong>
+                    hoặc liên lạc qua tài khoản instagram <strong><a href="https://www.instagram.com/_trong.lan_/" target="_blank">_tronglan.0812_</a></strong>
+                  </p>
+                </div>
+                <!--Grid column-->
+              </div>
+              <!--Grid row-->
+            </div>
+            <!-- Grid container -->
+            <hr>
+            <!-- Copyright -->
+            <div class="text-center p-3">
+              © 2020 Copyright: BLOGGLE
+            </div>
+            <!-- Copyright -->
+        </footer>
     </body>
                 
 </html>

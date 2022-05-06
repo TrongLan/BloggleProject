@@ -12,6 +12,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <style>
+            body{
+                background-color: rgb(227, 229, 231);
+            }
+            .navbar{
+                position: sticky;
+                top: 0;
+            }
             .navbar-brand{
                 font-size: 24px;
                 font-weight: bold;
@@ -26,9 +33,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 text-decoration: underline;
             }
             .post{
-                border:1px solid black;
+                background-color: whitesmoke;
                 border-radius: 10px;
                 margin: 10px auto;
+                width: 95%;
             }
             #dscd{
                 text-align: center;
@@ -36,6 +44,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 padding-bottom: 50px;
             }
             #dsbv{
+                margin-bottom: 20px;
                 height: 450px;
                 overflow: scroll;
                 overflow-x: hidden;
@@ -97,18 +106,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 font-weight: bold;
                 font-style: italic;
             }
+            footer{
+                border-top: 1px gray solid;
+            }
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="display: flex; justify-content: space-between;">
-            <a class="navbar-brand" href="/">BLOGGLE</a>
+        <nav class="navbar navbar-expand-lg bg-secondary" style="display: flex; justify-content: space-between;">
+            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
             <form class="form-inline my-2 my-lg-0" th:action="@{/}" method="get">
                 <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Nhập từ khóa...">
-                <button class="btn btn-outline-primary my-2 my-sm-0 d-inline"  type="submit">Search</button>
+                <button class="btn btn-outline-light my-2 my-sm-0 d-inline"  type="submit">Search</button>
             </form>
             <div class="btn-group" style="display: flex; justify-content: space-between;">
-                <a class="nav-link btn btn-outline-primary" href="/dangNhap">Đăng nhập</a>
-                <a class="nav-link btn btn-outline-primary" href="/dangKy">Đăng ký</a>
+                <a class="nav-link btn btn-outline-light" href="/dangNhap">Đăng nhập</a>
+                <a class="nav-link btn btn-outline-light" href="/dangKy">Đăng ký</a>
             </div>
         </nav>
 
@@ -143,5 +155,44 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
             </div>
         </div>
+        <footer class="bg-light text-center text-lg-start">
+            <!-- Grid container -->
+            <div class="container p-4">
+              <!--Grid row-->
+              <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                  <h5 class="text-uppercase">Giới thiệu Bloggle</h5>
+
+                  <p style="text-align: left">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                    aliquam voluptatem veniam, est atque cumque eum delectus sint!
+                  </p>
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                  <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+                  <p style="text-align: left">
+                    Mọi vấn đề và ý kiến đóng góp liên quan đến việc cải thiện Bloggle
+                    vui lòng gửi vào email <strong>bloggle.support@gmail.com</strong>
+                    hoặc liên lạc qua tài khoản instagram <strong><a href="https://www.instagram.com/_trong.lan_/" target="_blank">_tronglan.0812_</a></strong>.
+                  </p>
+                </div>
+                <!--Grid column-->
+              </div>
+              <!--Grid row-->
+            </div>
+            <!-- Grid container -->
+            <hr>
+            <!-- Copyright -->
+            <div class="text-center p-3">
+              © 2022 Copyright: BLOGGLE
+            </div>
+            <!-- Copyright -->
+        </footer>
     </body>
 </html>
