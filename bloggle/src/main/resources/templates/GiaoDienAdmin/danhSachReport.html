@@ -6,6 +6,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
         <style>
             body{
                 background-color: rgb(227, 229, 231);
@@ -166,8 +167,18 @@
                     </li>
                 </ul>
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white acc-setting" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bloggle</a>
+                    <a
+                        class="nav-link dropdown-toggle text-white acc-setting"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="fas fa-user-alt" style="font-size: 20px"></i>
+                    </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-item"><strong>Bloggle Admin</strong></div>
                         <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
                         <form class="dropdown-item" th:action="@{/logout}" method="POST">
                             <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
