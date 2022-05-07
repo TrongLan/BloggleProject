@@ -372,7 +372,10 @@
               © 2022 Copyright: BLOGGLE
             </div>
         </footer>
-        <footer th:if="${user_type==0 || user_type==2}" class="bg-light text-center text-lg-start">
+        <footer
+            style="background-image: url('/images/login_background.png'); background-size: cover; background-position: bottom;"
+                th:if="${user_type==0 || user_type==2}"
+                class="bg-light text-center text-lg-start">
             <!-- Grid container -->
             <div class="container p-4">
               <!--Grid row-->

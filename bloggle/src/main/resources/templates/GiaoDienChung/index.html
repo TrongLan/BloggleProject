@@ -108,7 +108,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 font-style: italic;
             }
             footer{
-                border-top: 1px gray solid;
+                background-image: url("/images/login_background.png");
+                background-size: cover;
+                background-position: bottom;
             }
         </style>
     </head>
@@ -140,7 +142,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <h2 th:if="${cd==null && (keyword==null||keyword.isBlank())}">Bài viết mới gần đây</h2>
                 <h2 th:if="${keyword!=null && !keyword.isBlank()}" th:text="'Kết quả tìm kiếm cho: '+${keyword}"></h2>
             </div>
-            <div id="dsbv">
+            <div id="dsbv" th:if="${!dsbv.isEmpty()}">
                 <div class="container post" th:each="bv:${dsbv}">
                     <div class="p_info">
                         <div>
@@ -154,6 +156,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         Đăng tải bởi <span th:text="${bv.getTk().getUsername()}"></span>
                     </div>
                 </div>
+            </div>
+            <div style="text-align: center; margin: 20px auto 80px auto; height: 300px;" th:unless="${!dsbv.isEmpty()}">
+                <img style="margin-bottom: 50px;" src="/images/blank-paper.png" alt="This is a blank paper." width="150px"/>
+                <div style="font-size: 20px;">
+                    <p th:if="${cd==null && (keyword==null||keyword.isBlank())}">Oops! Không có thêm bài viết nào mới rồi.</p>
+                    <p th:if="${cd!=null}">Oops! Chủ đề này chưa có bài viết nào.</p>
+                    <p th:if="${keyword!=null && !keyword.isBlank()}">Oops! Không tìm thấy bài viết nào với từ khóa <span style="font-style: italic" th:text="${keyword}"></span>. Thử tìm kiếm với từ khóa khác nhé!</p>
+                </div>
+                    
             </div>
         </div>
         <footer class="bg-light text-center text-lg-start">
