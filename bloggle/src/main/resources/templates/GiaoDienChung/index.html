@@ -163,8 +163,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <p th:if="${cd==null && (keyword==null||keyword.isBlank())}">Oops! Không có thêm bài viết nào mới rồi.</p>
                     <p th:if="${cd!=null}">Oops! Chủ đề này chưa có bài viết nào.</p>
                     <p th:if="${keyword!=null && !keyword.isBlank()}">Oops! Không tìm thấy bài viết nào với từ khóa <span style="font-style: italic" th:text="${keyword}"></span>. Thử tìm kiếm với từ khóa khác nhé!</p>
-                </div>
-                    
+                </div>  
             </div>
         </div>
         <footer class="bg-light text-center text-lg-start">

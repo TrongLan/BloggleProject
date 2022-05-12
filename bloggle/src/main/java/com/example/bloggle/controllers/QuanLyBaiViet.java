@@ -101,6 +101,10 @@ public class QuanLyBaiViet {
     
     @GetMapping("/u/editBV")
     public String moTrangTaoBaiViet(Model mod){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String email = authentication.getName();
+        TaiKhoan tk = tkService.taiKhoanCoEmail(email);
+        mod.addAttribute("tk", tk);
         mod.addAttribute("bv", new BaiViet());
         List<ChuDe> dscd = cdService.tatCaChuDe();
         mod.addAttribute("dscd", dscd);
@@ -130,6 +134,7 @@ public class QuanLyBaiViet {
             List<ChuDe> dscd = cdService.tatCaChuDe();
             mod.addAttribute("dscd", dscd);
             mod.addAttribute("bv", bv);
+            mod.addAttribute("tk", tk);
             return "GiaoDienNguoiDung/trangChinhSuaBaiViet";
         }
         else

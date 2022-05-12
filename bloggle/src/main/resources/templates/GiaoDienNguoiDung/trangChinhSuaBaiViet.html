@@ -1,48 +1,158 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Edit Post</title>
+        <title>Bloggle | Chỉnh sửa bài viết</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
         <script src="//cdn.ckeditor.com/4.18.0/full/ckeditor.js"></script>
-        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <style>
+            body{
+                background-color: rgb(227, 229, 231);
+            }
+            .navbar{
+                position:fixed;  
+                z-index:1;
+                top: 0;
+                width: 100%;
+            }
+            .navbar-brand{
+                font-size: 24px;
+                font-weight: bold;
+                padding-right: 25px;
+                border-right: 2px rgb(184, 190, 195) solid;
+            }
+            .acc-setting{
+                width: 150px;
+                text-align: center;
+            }
+            #content-container{
+                position: absolute;
+                top: 10%;
+                left:0;
+                right: 0;
+            }
+            #post-form{
+                width: 75%;
+                margin: 20px auto;
+            }
+            input{
+                font-weight: bold;
+                margin: 20px auto;
+            }
+            #row2{
+                display: flex;
+                justify-content: center;
+                column-gap: 2%;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                margin-bottom: 10px;
+            }
+            
+        </style>
     </head>
     <body>
-        <div>
-            <form th:action="@{/logout}" method="POST">
-                <input type="submit" value="Logout">
-            </form>
-            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
-            <br>
-            <a th:href="@{/u/danhSachBV}">Quản lý bài viết</a>
-            <br>
-            <a th:href="@{/u/editBV}">Đăng tải bài viết mới</a>
+        <nav class="navbar navbar-expand-lg bg-secondary">
+            <a class="navbar-brand text-white" href="/u">BLOGGLE</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between;">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/u/danhSachBV}">Kho bài viết</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/u/editBV}">Đăng tải</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle text-white acc-setting"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="fas fa-user-alt" style="font-size: 20px"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-item"><strong th:text="${tk.getUsername()}"></strong></div>
+                        <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+                        <form class="dropdown-item" th:action="@{/logout}" method="POST">
+                            <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="content-container">
+            <div id="post-form">
+                <form th:action="@{/u/reuploadBV/{p} (p=${bv.getId()})}" method="POST" th:object="${bv}">
+                    <input class="form-control form-control-lg" type="text" th:field="*{tieude}" placeholder="Nhập tiêu đề..." required/>
+                    <div id="row2">
+                        <div>
+                            <textarea id="editor" name="noidung" type="text" th:field="*{noidung}"></textarea>
+                            <br>
+                            <button class="form-control btn btn-success" id="upload" type="submit">Cập nhật thay đổi</button>
+                        </div>
+                        <div>
+                            <select required class="form-control" th:field="*{cd}" >
+                                <option value="">Chọn một chủ đề</option>
+                                <option th:each="cd:${dscd}" th:value="${cd.getId()}" th:text="${cd.getTen()}"></option>
+                            </select>
+                        </div>         
+                    </div>   
+                </form>
+            </div>
+            <footer
+                style="background-image: url('/images/login_background.png'); background-size: cover; background-position: bottom;"
+                class="bg-light text-center text-lg-start">
+                <!-- Grid container -->
+                <div class="container p-4">
+                  <!--Grid row-->
+                  <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                      <h5 class="text-uppercase">Giới thiệu Bloggle</h5>
+
+                      <p style="text-align: left">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                        molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                        aliquam voluptatem veniam, est atque cumque eum delectus sint!
+                      </p>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                      <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+                      <p style="text-align: left">
+                        Mọi vấn đề và ý kiến đóng góp liên quan đến việc cải thiện Bloggle
+                        vui lòng gửi vào email <strong>bloggle.support@gmail.com</strong>
+                        hoặc liên lạc qua tài khoản instagram <strong><a href="https://www.instagram.com/_trong.lan_/" target="_blank">_tronglan.0812_</a></strong>
+                      </p>
+                    </div>
+                    <!--Grid column-->
+                  </div>
+                  <!--Grid row-->
+                </div>
+                <!-- Grid container -->
+                <hr>
+                <!-- Copyright -->
+                <div class="text-center p-3">
+                  © 2022 Copyright: BLOGGLE
+                </div>
+                <!-- Copyright -->
+            </footer>
         </div>
-        <hr>
-        <form th:action="@{/u/reuploadBV/{p} (p=${bv.getId()})}" method="POST" th:object="${bv}">
-            <div>
-                <select th:field="*{cd}" >
-                    <option th:value="NULL">Chọn một chủ đề</option>
-                    <option th:each="cd:${dscd}" th:value="${cd.getId()}" th:text="${cd.getTen()}"></option>
-                </select> 
-            </div>
-            <div>
-                <input type="text" th:field="*{tieude}" placeholder="Type a title for your post..." required/>
-            </div>
-            <div>
-                <textarea id="editor" name="noidung" type="text" th:field="*{noidung}"></textarea>
-            </div> 
-            <div>
-                <button id="upload" type="submit">Cập nhật thay đổi</button>
-            </div>
-            
-        </form>
                 
         <script>
             $(document).ready(function(){
                 CKEDITOR.replace('editor',{
-//                    filebrowserImageUploadUrl:'/image/upload',
-//                    height: 400
+                    height: 400
                 });
                 
                 CKEDITOR.on('dialogDefinition',function(e){
@@ -51,15 +161,11 @@
                     
                     switch(dialogName){
                         case 'image':
-//                            dialogDefinition.removeContents('info');
                             dialogDefinition.removeContents('Link');
                             dialogDefinition.removeContents('advanced');
                             break;
                     }
                 });
-//                $('#upload').click(function(){
-//                    alert(CKEDITOR.instances.editor.getData());
-//                });
             });
         </script>
     </body>

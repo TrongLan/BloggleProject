@@ -3,25 +3,138 @@
         <title>Gửi báo cáo</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <style>
+            body{
+                background-color: rgb(227, 229, 231);
+                background-image: url("/images/login_background.png");
+                background-position: center;
+                background-size: cover;
+            }
+            .navbar{
+                position:fixed;
+                z-index: 1;
+                width: 100%;
+                top: 0;
+            }
+            .navbar-brand{
+                font-size: 24px;
+                font-weight: bold;
+                padding-right: 25px;
+                border-right: 2px rgb(184, 190, 195) solid;
+            }
+            .acc-setting{
+                width: 150px;
+                text-align: center;
+            }
+            #content-container{
+                position: relative;
+                top: 20%;
+            }
+            #form-container{
+                width: 50%;
+                margin: auto;
+                
+            }
+            textarea{
+                resize: none;
+            }
+            footer{
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+        </style>
     </head>
     <body>
-        <div>
-            <form th:action="@{/logout}" method="POST">
-                <input type="submit" value="Logout">
-            </form>
-            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
-            <br>
-            <a th:href="@{/u/danhSachBV}">Quản lý bài viết</a>
-            <br>
-            <a th:href="@{/u/editBV}">Đăng tải bài viết mới</a>
+        <nav class="navbar navbar-expand-lg bg-secondary">
+            <a class="navbar-brand text-white" href="/u">BLOGGLE</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between;">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/u/danhSachBV}">Kho bài viết</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/u/editBV}">Đăng tải</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle text-white acc-setting"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="fas fa-user-alt" style="font-size: 20px"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-item"><strong th:text="${tk.getUsername()}"></strong></div>
+                        <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+                        <form class="dropdown-item" th:action="@{/logout}" method="POST">
+                            <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="content-container">
+            <div id="form-container">
+                <form th:object="${report}" method="post" th:action="@{/u/report/{p}(p=${bv.getId()})}">
+                    <div class="form-group shadow-textarea">
+                        <label for="exampleFormControlTextarea6"><h5>Tôi báo cáo bài viết này với lý do</h5></label>
+                        <textarea required th:field="*{lydo}" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="8" placeholder="Nhập lý do của bạn..."></textarea>
+                    </div>
+                    <button class="form-control btn btn-success" type="submit">Gửi</button>
+                </form>
+            </div>
+            <footer
+                style="background-image: url('/images/login_background.png'); background-size: cover; background-position: bottom;"
+                class="bg-light text-center text-lg-start">
+                <!-- Grid container -->
+                <div class="container p-4">
+                  <!--Grid row-->
+                  <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                      <h5 class="text-uppercase">Giới thiệu Bloggle</h5>
+
+                      <p style="text-align: left">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                        molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                        aliquam voluptatem veniam, est atque cumque eum delectus sint!
+                      </p>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                      <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+                      <p style="text-align: left">
+                        Mọi vấn đề và ý kiến đóng góp liên quan đến việc cải thiện Bloggle
+                        vui lòng gửi vào email <strong>bloggle.support@gmail.com</strong>
+                        hoặc liên lạc qua tài khoản instagram <strong><a href="https://www.instagram.com/_trong.lan_/" target="_blank">_tronglan.0812_</a></strong>
+                      </p>
+                    </div>
+                    <!--Grid column-->
+                  </div>
+                  <!--Grid row-->
+                </div>
+                <!-- Grid container -->
+                <hr>
+                <!-- Copyright -->
+                <div class="text-center p-3">
+                  © 2022 Copyright: BLOGGLE
+                </div>
+                <!-- Copyright -->
+            </footer>
         </div>
-        <div>
-            <h2>Tôi báo cáo bài viết này với lý do</h2>
-            <form th:object="${report}" method="post" th:action="@{/u/report/{p}(p=${bv.getId()})}">
-                <textarea required th:field="*{lydo}" placeholder="Nhập lý do của bạn..."></textarea>
-                <button type="submit">Gửi</button>
-            </form>
             
-        </div>
+            
     </body>
 </html>

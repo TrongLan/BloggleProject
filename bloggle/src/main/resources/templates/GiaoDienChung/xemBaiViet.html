@@ -203,7 +203,7 @@
             </div>
         </nav>
         <nav th:if="${user_type==2}" class="navbar navbar-expand-lg bg-secondary">
-            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
+            <a class="navbar-brand text-white" href="/u">BLOGGLE</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-around; column-gap: 1024px">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -214,8 +214,18 @@
                     </li>
                 </ul>
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${tk.getUsername()}"></a>
+                    <a
+                        class="nav-link dropdown-toggle text-white acc-setting"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="fas fa-user-alt" style="font-size: 20px"></i>
+                    </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-item"><strong th:text="${tk.getUsername()}"></strong></div>
                         <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
                         <form class="dropdown-item" th:action="@{/logout}" method="POST">
                             <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
@@ -225,7 +235,7 @@
             </div>
         </nav>
         <nav th:if="${user_type==1}" class="navbar navbar-expand-lg bg-secondary">
-            <a class="navbar-brand text-white" href="/">BLOGGLE</a>
+            <a class="navbar-brand text-white" href="/u">BLOGGLE</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between;">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -276,7 +286,7 @@
                             Đăng bởi <span th:text="${bv.getTk().getUsername()}"></span>
                             lúc
                             <span th:text="${bv.getTgdangFormat()}"></span>
-                            <span style="color:green" th:if="${!bv.getTgdang().equals(bv.getTgsua())}">- Đã chỉnh sửa</span>
+                            <span style="color:green; font-size: 12px" th:if="${!bv.getTgdang().equals(bv.getTgsua())}">- Đã chỉnh sửa lúc <span style="color:green;  font-size: 12px" th:text="'('+${bv.getTgsuaFormat()}+')'"></span></span>
                         </div>
                         <div th:if="${bv.soLuotDanhGia()>0}" th:text="'Điểm '+${bv.diemDanhGia()}+'/'+${bv.soLuotDanhGia()}+' lượt đánh giá'"></div>
                         <div th:unless="${bv.soLuotDanhGia()>0}">Chưa có đánh giá nào</div>                           
@@ -335,6 +345,7 @@
                         <div id="danhgia">
                             <button type="submit" class="btn btn-primary">Đánh giá</button>
                             <a th:if="${!tk.equals(bv.getTk())}" th:href="@{/u/report/{p} (p=${bv.getId()})}">Báo cáo bài viết này</a>
+                            <a th:unless="${!tk.equals(bv.getTk())}" th:href="@{/u/chinhSuaBV/{p} (p=${bv.getId()})}">Chỉnh sửa</a>
                         </div>
                     </form>
                     
@@ -410,7 +421,7 @@
             <hr>
             <!-- Copyright -->
             <div class="text-center p-3">
-              © 2020 Copyright: BLOGGLE
+              © 2022 Copyright: BLOGGLE
             </div>
             <!-- Copyright -->
         </footer>

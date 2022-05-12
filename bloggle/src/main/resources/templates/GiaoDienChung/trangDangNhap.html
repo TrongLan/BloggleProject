@@ -35,6 +35,12 @@
                 width: 30%;
                 padding: 80px 0;
             }
+            #form-container h4{
+                text-transform: uppercase;
+                text-align: center;
+                margin-bottom: 20px;
+                
+            }
             form{
                 width: 80%;
                 margin: auto;
@@ -64,11 +70,14 @@
             <p>Nơi bạn chia sẻ thông tin, kiến thức của mình với mọi người</p>
         </div>
         <div id="form-container">
+            <h4>
+                Đăng nhập
+            </h4>
             <form th:action="@{/dangNhap}" method="POST">
                 <div class="input_container">
                     <input
                         class="form-control"
-                        placeholder="Nhập email hoặc tên đăng nhập." 
+                        placeholder="Nhập email hoặc tên đăng nhập..." 
                         type="text"
                         name="email"
                         required
@@ -77,7 +86,7 @@
                 <div class="input_container">
                     <input
                         class="form-control"
-                        placeholder="Nhập mật khẩu." 
+                        placeholder="Nhập mật khẩu của bạn..." 
                         type="password"
                         name="password"
                         required

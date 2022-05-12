@@ -114,6 +114,7 @@ public class DanhGiaBaiViet {
                 mod.addAttribute("report", new Report());      
         }
         mod.addAttribute("bv", bv);
+        mod.addAttribute("tk", tk);
         return "GiaoDienNguoiDung/trangReport";
     }
     

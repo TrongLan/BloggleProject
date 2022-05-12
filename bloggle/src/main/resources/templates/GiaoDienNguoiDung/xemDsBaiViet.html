@@ -3,31 +3,225 @@
         <title>Kho bài viết</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <style>
+            body{
+                background-color: rgb(227, 229, 231);
+            }
+            .navbar{
+                position: sticky;
+                top: 0;
+            }
+            .navbar-brand{
+                font-size: 24px;
+                font-weight: bold;
+                padding-right: 25px;
+                border-right: 2px rgb(184, 190, 195) solid;
+            }
+            .acc-setting{
+                width: 150px;
+                text-align: center;
+            }
+            #above-list{
+                text-align: center;
+                margin: auto;
+                padding-top: 30px;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+                border-bottom: 2px gray solid;
+                position: sticky;
+                top: 62px;
+                align-self: flex-start;
+                background-color: rgb(227, 229, 231);
+            }
+            .post{
+                background-color: whitesmoke;
+                border-radius: 10px;
+                margin: 10px auto;
+                width: 95%;
+            }
+            #dsbv{
+                margin-bottom: 20px;
+                height: 450px;
+                overflow: scroll;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            .p_info{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .p_info div{
+                /*border: 1px red solid;*/
+                width: 80%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 10px 0;
+            }
+            .p_info div a{
+                /*border: 1px red solid;*/
+                padding-right: 10px;
+                text-align: left;
+            }
+            .topic_name{
+                font-size: 12px;
+                padding: 2px 5px;
+                background-color: lightskyblue;
+                color: white;
+                border-radius: 3px;
+            }
+            .datetime{
+                /*border: 1px red solid;*/                
+                width: 120px;
+                font-size: 14px;
+                padding: 5px;
+                text-align: center;
+                color: graytext;
+                font-style: italic;
+            }
+            .p_title{
+                color: black;
+                font-size: 24px;
+                font-weight: 600;
+            }
+            .p_title :hover{
+                color: lightskyblue;
+                text-decoration: none;
+            }
+            .author{
+                padding: 5px 0;
+                color: graytext;
+                font-size: 14px;
+            }
+            .author span{
+                font-weight: bold;
+                font-style: italic;
+            }
+            .row2{
+                display: flex;
+                justify-content: space-between;
+            }
+            .action{
+                width: 10%;
+                display: flex;
+                justify-content: space-between;
+                font-size: 18px;
+            }
+            .action a:hover{
+                font-style: italic;
+                text-decoration: none;
+                font-size: 20px;
+            }
+        </style>
     </head>
     <body>
-        <div>
-            <form th:action="@{/logout}" method="POST">
-                <input type="submit" value="Logout">
-            </form>
-            <a th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
-            <br>
-            <a th:href="@{/u/danhSachBV}">Quản lý bài viết</a>
-            <br>
-            <a th:href="@{/u/editBV}">Đăng tải bài viết mới</a>
-        </div>
-        <div>
-            <h2 th:text="'Danh sách bài viết của '+${tk.getUsername()}"></h2>
-            <div th:if="${dsbv.isEmpty()}">
-                Bạn chưa đăng tải bài viết nào. <a th:href="@{/u/editBV}">Tạo bài viết mới</a>
-            </div>
-            <div th:unless="${dsbv.isEmpty()}" th:each="bv:${dsbv}">
-                <div style="border:1px solid black;">
-                    <a th:href="@{/xemBV/{idbv} (idbv=${bv.getId()})}" th:text="${bv.getTieude()}"></a>
-                    <p><span th:text="${bv.getTgdangFormat()}"></span> <span th:text="${bv.getCd().getTen()}"></span></p>
-                    <a th:href="@{/u/chinhSuaBV/{p} (p=${bv.getId()})}">Chỉnh sửa</a>
-                    <a th:href="@{/u/xoaBV/{idbv} (idbv=${bv.getId()})}">Xóa bài viết</a>
+        <nav class="navbar navbar-expand-lg bg-secondary">
+            <a class="navbar-brand text-white" href="/u">BLOGGLE</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between;">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/u/danhSachBV}">Kho bài viết</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/u/editBV}">Đăng tải</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle text-white acc-setting"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="fas fa-user-alt" style="font-size: 20px"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-item"><strong th:text="${tk.getUsername()}"></strong></div>
+                        <a class="dropdown-item" th:href="@{/doiMatKhau}">Đổi mật khẩu</a>
+                        <form class="dropdown-item" th:action="@{/logout}" method="POST">
+                            <button style="border: none; padding: 0; background-color: white" type="submit">Đăng xuất</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+        </nav>
+        <div class="container" id="above-list">
+            <h2>Bài viết của bạn</h2>   
         </div>
+        <div class="container">
+            <div id="dsbv" th:if="${!dsbv.isEmpty()}">
+                <div class="container post" th:each="bv:${dsbv}">
+                    <div class="p_info">
+                        <div>
+                            <a class="p_title" th:href="@{/xemBV/{idbv} (idbv=${bv.getId()})}" th:text="${bv.getTieude()}">
+                            </a>
+                            <p class="topic_name"th:text="${bv.getCd().getTen()}"></p>
+                        </div>
+                        <p class="datetime" th:text="${bv.getTgdangFormat()}"></p>
+                    </div>
+                    <div class="row2">
+                        <div class="author">Đăng tải bởi <span th:text="${bv.getTk().getUsername()}"></span></div>
+                        <div class="action">
+                            <a style="color: blue" th:href="@{/u/chinhSuaBV/{p} (p=${bv.getId()})}">Sửa</a>
+                            <a style="color: #CE3226" th:href="@{/u/xoaBV/{idbv} (idbv=${bv.getId()})}">Xóa</a>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin: 100px auto 50px auto; height: 300px;" th:unless="${!dsbv.isEmpty()}">
+                <img style="margin-bottom: 50px;" src="/images/empty-box.png" alt="This is an empty box." width="150px"/>
+                <div style="font-size: 20px;">
+                    <p>Bạn chưa đăng tải bài viết nào cả. <a th:href="@{/u/editBV}">Đến đăng tải</a></p>
+                </div>  
+            </div>
+        </div>
+        <footer
+            style="background-image: url('/images/login_background.png'); background-size: cover; background-position: bottom;"
+            class="bg-light text-center text-lg-start">
+            <!-- Grid container -->
+            <div class="container p-4">
+              <!--Grid row-->
+              <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                  <h5 class="text-uppercase">Giới thiệu Bloggle</h5>
+
+                  <p style="text-align: left">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                    aliquam voluptatem veniam, est atque cumque eum delectus sint!
+                  </p>
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                  <h5 class="text-uppercase">Thông tin liên hệ</h5>
+
+                  <p style="text-align: left">
+                    Mọi vấn đề và ý kiến đóng góp liên quan đến việc cải thiện Bloggle
+                    vui lòng gửi vào email <strong>bloggle.support@gmail.com</strong>
+                    hoặc liên lạc qua tài khoản instagram <strong><a href="https://www.instagram.com/_trong.lan_/" target="_blank">_tronglan.0812_</a></strong>
+                  </p>
+                </div>
+                <!--Grid column-->
+              </div>
+              <!--Grid row-->
+            </div>
+            <!-- Grid container -->
+            <hr>
+            <!-- Copyright -->
+            <div class="text-center p-3">
+              © 2022 Copyright: BLOGGLE
+            </div>
+            <!-- Copyright -->
+        </footer>
     </body>
 </html>

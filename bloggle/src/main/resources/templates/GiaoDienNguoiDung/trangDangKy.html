@@ -3,44 +3,108 @@
         <title>Đăng ký tài khoản Bloggle</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <style>
+            body{
+                background-color: rgb(227, 229, 231);
+                background-image: url("/images/login_background.png");
+                background-size: cover;
+                background-position: center;
+            }
+            #box{
+                width: 75%;
+                margin:auto;
+                border-radius: 30px;
+                padding: 100px auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                column-gap: 10%;
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+
+            }
+            #form-container{
+                width: 30%;
+            }
+            #form-container h3{
+                text-transform: uppercase;
+                text-align: center;
+                padding: 10px auto;
+                
+            }
+            img{
+                margin: 100px auto;
+            }
+            .message{
+                font-style: italic;
+                color: red;
+                font-size: 12px;
+                padding-left: 5px;
+            }
+            #action{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        </style>
     </head>
     <body>
-        <form th:action="@{/dangKy}" th:object="${tk}" method="POST">
-            <h2>REGISTER</h2>
-                <div>
-                    <label>Email</label>
-                    <input
-                        name="email"
-                        placeholder="Nhập email của bạn." 
-                        type="email"
-                        th:field="*{email}"
-                    />
-                    <p style="color: red" th:text="${err1}"></p>
-                </div>
-                <div>
-                    <label>Tên tài khoản</label>
-                    <input
-                        name="username"
-                        placeholder="Nhập tên đăng nhập." 
-                        type="text"
-                        th:field="*{username}"
-                    />
-                    <p style="color: red" th:text="${err2}"></p>
-                </div>
-                <div>
-                    <label>Mật khẩu</label>
-                    <input
-                        name="password"
-                        placeholder="Tạo mật khẩu của bạn." 
-                        type="password"
-                        th:field="*{password}"
-                    />
-                    <p style="color: red" th:text="${err3}"></p>
-                </div>
-                
-                <div>
-                    <button type="submit">Đăng ký</button>
-                </div>
-        </form>
+        <div id="box" class="bg-light">
+            <div id="form-container">
+                <h3>
+                    Đăng ký tài khoản Bloggle
+                </h3>
+                <form class="form" th:action="@{/dangKy}" th:object="${tk}" method="POST">
+                    <div>
+                        <label class="form-label">Email</label>
+                        <input
+                            class="form-control"
+                            name="email"
+                            placeholder="Nhập email của bạn..." 
+                            type="email"
+                            th:field="*{email}"
+                        />
+                        <p class="message" th:text="${err1}"></p>
+                    </div>
+                    <div>
+                        <label class="form-label">Tên tài khoản</label>
+                        <input
+                            class="form-control"
+                            name="username"
+                            placeholder="Nhập tên đăng nhập..." 
+                            type="text"
+                            th:field="*{username}"
+                        />
+                        <p class="message" th:text="${err2}"></p>
+                    </div>
+                    <div>
+                        <label class="form-label">Mật khẩu</label>
+                        <input
+                            class="form-control"
+                            name="password"
+                            placeholder="Tạo mật khẩu của bạn..." 
+                            type="password"
+                            th:field="*{password}"
+                        />
+                        <p class="message" th:text="${err3}"></p>
+                    </div>
+
+                    <div id="action">
+                        <button class="btn btn-primary" type="submit">Đăng ký</button>
+                        <a href="/">Trở lại trang chủ</a>
+                    </div>
+                </form>
+            </div>
+            
+            <div>
+                <img src="/images/register.png" alt="registration" width="450px"/>
+            </div>    
+        </div>     
     </body>
+    
 </html>

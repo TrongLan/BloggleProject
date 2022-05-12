@@ -27,6 +27,7 @@ public class DangKy {
         mod.addAttribute("err1", err1);
         mod.addAttribute("err2", err2);
         mod.addAttribute("err3", err3);
+        err1 = ""; err2 = ""; err3 = "";
         return "GiaoDienNguoiDung/trangDangKy";
     }
     @PostMapping("/dangKy")
